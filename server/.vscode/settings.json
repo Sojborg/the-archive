@@ -1,0 +1,4 @@
+{
+  "appService.defaultWebAppToDeploy": "/subscriptions/6b33fdcf-81c1-4a53-8c73-e7617aa884c6/resourceGroups/appsvc_linux_centralus/providers/Microsoft.Web/sites/thecoaches",
+  "appService.deploySubpath": "."
+}
