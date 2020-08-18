@@ -1,24 +1,19 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { Navigation } from '../../helpers/navigation';
-import { CreateBook } from './CreateBook';
+import { Book } from '../../helpers/types';
+import { useFetch } from '../../hooks/useFetch';
 
 export const Books = () => {
-  const [books, setBooks] = useState<any[] | undefined>(undefined);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const books = await fetch('/books').then(data => data.json());
-      setBooks(books);
-    }
-    fetchData();
-  }, [])
+  const response = useFetch<Book[]>('/books');
+  const books = response.response;
 
   return (
     <div className={'books'}>
       <h1>Books</h1>
       <button><Link to={Navigation.newbook}>New book</Link></button>
-      {books && books.map(book => <li>{book.title}</li>)}
+      {response.isFetchingData && <h2>...</h2>}
+      {books && books.map((book: Book) => <li>{book.title}</li>)}
     </div>
   );
 }
