@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
+import { Navigation } from "../../helpers/navigation";
 
 interface IBook {
   id: string;
@@ -17,6 +19,7 @@ const bookInfo = {
 };
 
 export const CreateBook = () => {
+  const history = useHistory();  
   const [book, setBook] = useState({
     title: "",
     author: "",
@@ -30,15 +33,21 @@ export const CreateBook = () => {
   };
 
   const save = async () => {
-    const response = await fetch("/savebook", {
-      method: "POST", // *GET, POST, PUT, DELETE, etc.
-      cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
-      headers: {
-        "Content-Type": "application/json",
-      },
-      referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
-      body: JSON.stringify(book), // body data type must match "Content-Type" header
-    });
+    try {
+      await fetch("/savebook", {
+        method: "POST",
+        cache: "no-cache",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        referrerPolicy: "no-referrer",
+        body: JSON.stringify(book),
+      });
+
+      history.push(Navigation.books);
+    } catch(e) {
+
+    }
   };
 
   return (
