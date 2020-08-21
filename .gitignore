@@ -23,3 +23,5 @@ yarn-debug.log*
 yarn-error.log*
 
 *.js
+
+server/repository/config.ts
