@@ -1,4 +1,4 @@
-import { config } from '../repository/config';
+import { config } from '../config';
 import {repository} from '../repository/repository';
 
 repository.getDatabase()

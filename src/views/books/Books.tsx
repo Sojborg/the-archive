@@ -1,12 +1,13 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { Book } from "../../components/Book";
 import { Navigation } from "../../helpers/navigation";
-import { Book } from "../../helpers/types";
+import { IBook } from "../../helpers/types";
 import { useFetch } from "../../hooks/useFetch";
 import './Books.scss';
 
 export const Books = () => {
-  const response = useFetch<Book[]>("/books");
+  const response = useFetch<IBook[]>("/books");
   const books = response.response;
 
   return (
@@ -18,19 +19,8 @@ export const Books = () => {
       {response.isFetchingData && <h2>...</h2>}
       <ul className={'books__list'}>
         {books &&
-          books.map((book: Book) => (
-            <li key={book.id} className={"books__list__item"}>
-              <img src={book.coverImageUrl} />
-              <div className={'books__list__item__description'}>
-                <h4>{book.title}</h4>
-                <p>{book.synopsis}</p>
-              </div>
-              <div className={'books__list__item__info'}>
-                <p>Publisher: {book.publisher}</p>
-                <p>Page count: {book.pageCount}</p>
-                <p>Product id: {book.productId}</p>
-              </div>
-            </li>
+          books.map((book: IBook) => (
+            <Book book={book} />
           ))}
       </ul>
     </div>

@@ -10,6 +10,7 @@ import {
 import { Dashboard } from './views/dashboard/Dashboard';
 import { CreateBook } from './views/books/CreateBook';
 import { Navigation } from './helpers/navigation';
+import { SearchBar } from './components/SearchBar';
 
 function App() {
 
@@ -26,6 +27,7 @@ function App() {
               <Link to={Navigation.books}>Books</Link>
             </li>
           </ul>
+          <SearchBar />
         </nav>
         
         <Switch>

@@ -2,6 +2,7 @@ import express = require("express");
 import logger from "morgan";
 import { repository } from "./repository/repository";
 import bodyParser from "body-parser";
+import { googleBooksService } from "./services/google-books-service";
 
 // Create a new express app instance
 const app: express.Application = express();
@@ -35,4 +36,12 @@ app.post("/savebook", (request, response) => {
   } catch (e) {
     console.error(e);
   }
+});
+
+app.get('/searchbook', async (request, response) => {
+  console.log('request', request.query.q);
+  const searchQuery = encodeURI(request.query.q as string) ;
+  console.log('searchQuery', searchQuery);
+  const books = await googleBooksService.query(searchQuery);
+  response.send(JSON.stringify(books));
 });

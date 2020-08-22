@@ -1,5 +1,5 @@
 import { DocumentClient } from "documentdb";
-import { config } from "./config";
+import { config } from "../config";
 var url = require("url");
 
 class Repository {
