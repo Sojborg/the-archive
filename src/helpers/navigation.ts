@@ -1,5 +1,6 @@
 export enum Navigation {
     home = '/',
     books = '/books',
-    newbook = '/newbook'
+    newbook = '/newbook',
+    search = '/search'
 }

@@ -6,6 +6,6 @@ import { useFetch } from '../../hooks/useFetch';
 export const Dashboard = () => {
 
     return (<div>
-        <h3>Dashboard</h3>
+        <h2>Dashboard</h2>
     </div>)
 }

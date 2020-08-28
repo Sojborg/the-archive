@@ -1,19 +1,13 @@
-import React, { useState } from "react";
-import { IBook } from "../helpers/types";
-import { useFetch } from "../hooks/useFetch";
-import { Book } from "./Book";
+import React, { useContext, useState } from "react";
+import { useHistory } from "react-router-dom";
+import { Navigation } from "../helpers/navigation";
 
-interface ISearchBarProps {
-}
-
-export const SearchBar = (props: ISearchBarProps) => {
-  const [query, setQuery] = useState("");
+export const SearchBar = () => {
   const [inputValue, setInputValue] = useState("");
-
-  const response = useFetch<any>(`/searchbook?q=${query}`);
+  const history = useHistory();
 
   const onSearchClick = () => {
-    setQuery(inputValue);
+    history.push(`${Navigation.search}/${inputValue}`);
   };
 
   return (
@@ -23,22 +17,7 @@ export const SearchBar = (props: ISearchBarProps) => {
         onChange={(e) => setInputValue(e.target.value)}
         type={"text"}
       />
-      <button onClick={onSearchClick}>Search</button>
-      {!response.error && response.response && response.response.items && (
-        <ul>
-          {response.response.items.map((apiBook: any) => {
-            const { volumeInfo } = apiBook;
-            const book = {
-              title: volumeInfo.title,
-              synopsis: volumeInfo.description,
-              publisher: volumeInfo.publisher,
-              pageCount: volumeInfo.pageCount,
-              coverImageUrl: volumeInfo.imageLinks.thumbnail,
-            } as IBook;
-            return <Book book={book} />;
-          })}
-        </ul>
-      )}
+      <button onClick={onSearchClick}>Search</button>      
     </div>
   );
 };

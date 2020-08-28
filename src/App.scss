@@ -1,0 +1,42 @@
+.app {
+  &__navigation {
+    display: flex;
+    flex-direction: row;
+    background-color: #f3f3f3;
+    align-items: center;
+    padding: 8px 40px;
+    margin-bottom: 32px;
+
+    ul {
+      padding: 0;
+      flex: 1;
+      display: flex;
+      flex-direction: row;
+      list-style-type: none;
+
+      li {
+        margin-right: 40px;
+        color: black;
+        
+        a {
+          font-weight: bold;
+          font-size: 1.125rem;
+          text-decoration: none;
+        }
+
+        a:visited {
+          color: black;
+        }
+
+        a:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+  }
+
+  &__content {
+    max-width: 980px;
+    margin: 0 auto;
+  }
+}
