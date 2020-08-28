@@ -38,6 +38,18 @@ app.post("/savebook", (request, response) => {
   }
 });
 
+app.post("/removebook", (request, response) => {
+  try {
+    console.log('BODY', request.body);
+    const data = request.body
+    console.log(data);
+    repository.deleteFamilyDocument(data.id);
+    response.sendStatus(200);
+  } catch (e) {
+    console.error(e);
+  }
+});
+
 app.get('/searchbook', async (request, response) => {
   console.log('request', request.query.q);
   const searchQuery = encodeURI(request.query.q as string) ;

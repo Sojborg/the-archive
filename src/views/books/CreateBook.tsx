@@ -1,18 +1,9 @@
 import React, { useRef, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { TextEditor } from '../../components/TextEditor';
+import { saveBook } from '../../helpers/bookservice';
 import { Navigation } from '../../helpers/navigation';
-
-interface IBook {
-  id: string;
-  coverImageUrl: string
-  title: string;
-  author: string;
-  publisher: string;
-  pageCount: number;
-  synopsis: string;
-  productId: string;
-}
+import { IBook } from '../../helpers/types';
 
 const bookInfo = {
   coverImageUrl:
@@ -42,21 +33,7 @@ export const CreateBook = () => {
   };
 
   const save = async () => {
-    try {
-      await fetch('/savebook', {
-        method: 'POST',
-        cache: 'no-cache',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        referrerPolicy: 'no-referrer',
-        body: JSON.stringify(book),
-      });
-
-      history.push(Navigation.books);
-    } catch(e) {
-
-    }
+    await saveBook(book);
   };
 
   return (

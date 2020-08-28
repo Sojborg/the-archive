@@ -142,9 +142,9 @@ class Repository {
   /**
    * Delete the document by ID.
    */
-  deleteFamilyDocument(document: any) {
-    let documentUrl = `${this.collectionUrl}/docs/${document.id}`;
-    console.log(`Deleting document:\n${document.id}\n`);
+  deleteFamilyDocument(id: any) {
+    let documentUrl = `${this.collectionUrl}/docs/${id}`;
+    console.log(`Deleting document:\n${id}\n`);
 
     return new Promise((resolve, reject) => {
       this.client.deleteDocument(documentUrl, (err, result) => {
