@@ -77,10 +77,12 @@ class Repository {
       this.client.readDocument(documentUrl, (err, result) => {
         if (err) {
           if (err.code == this.HttpStatusCodes.NOTFOUND) {
+            console.log('DOCUMENT', document);
             this.client.createDocument(
               this.collectionUrl,
               document,
               (err, created) => {
+                console.log('DONE', err, created)
                 if (err) reject(err);
                 else resolve(created);
               }
@@ -127,7 +129,6 @@ class Repository {
   replaceFamilyDocument(document: any) {
     let documentUrl = `${this.collectionUrl}/docs/${document.id}`;
     console.log(`Replacing document:\n${document.id}\n`);
-    document.children[0].grade = 6;
 
     return new Promise((resolve, reject) => {
       this.client.replaceDocument(documentUrl, document, (err, result) => {

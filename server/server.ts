@@ -31,7 +31,7 @@ app.get("/books", async (req, res) => {
 app.post("/savebook", (request, response) => {
   try {
     console.log(request.body);
-    repository.getDocument(request.body);
+    repository.replaceFamilyDocument(request.body);
     response.sendStatus(200);
   } catch (e) {
     console.error(e);

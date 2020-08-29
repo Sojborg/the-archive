@@ -20,7 +20,7 @@ export const Books = () => {
       <ul className={'books__list'}>
         {books &&
           books.map((book: IBook) => (
-            <Book book={book} />
+            <Book key={book.id} book={book} />
           ))}
       </ul>
     </div>

@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { RouteComponentProps } from "react-router-dom";
 import { Book } from "../../components/Book";
 import { IBook } from "../../helpers/types";
 import { useFetch } from "../../hooks/useFetch";

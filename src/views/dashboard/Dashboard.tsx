@@ -1,7 +1,4 @@
-import React, { useState } from 'react';
-import { Book } from '../../components/Book';
-import { IBook } from '../../helpers/types';
-import { useFetch } from '../../hooks/useFetch';
+import React from 'react';
 
 export const Dashboard = () => {
 

@@ -7,4 +7,5 @@ export interface IBook {
   pageCount: number;
   publisher: string;
   synopsis: string;
+  notes?: string;
 }

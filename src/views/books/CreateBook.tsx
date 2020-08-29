@@ -1,8 +1,6 @@
-import React, { useRef, useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import React, { useState } from 'react';
 import { TextEditor } from '../../components/TextEditor';
 import { saveBook } from '../../helpers/bookservice';
-import { Navigation } from '../../helpers/navigation';
 import { IBook } from '../../helpers/types';
 
 const bookInfo = {
@@ -14,7 +12,6 @@ const bookInfo = {
 };
 
 export const CreateBook = () => {
-  const history = useHistory();  
   const [book, setBook] = useState({
     id: '',
     title: '',
