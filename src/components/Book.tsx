@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { removeBook, saveBook } from "../helpers/bookservice";
+import { addBookList, removeBook, saveBook } from "../helpers/bookservice";
 import { IBook } from "../helpers/types";
 import "./Book.scss";
 import { TextEditor } from "./TextEditor";
@@ -26,7 +26,7 @@ export const Book = (props: IBookProps) => {
   }, [book.notes]);
 
   const onAddToListClick = () => {
-    saveBook(book);
+    addBookList(book);
   };
 
   const onRemoveClick = () => {
@@ -34,7 +34,7 @@ export const Book = (props: IBookProps) => {
   };
 
   const save = async () => {
-    await saveBook({ ...book, title: "Harry Potter - test", notes: notes });
+    await saveBook({ ...book, notes: notes });
   };
 
   const toggleNotes = (toggleName: keyof IDisplayState) => {

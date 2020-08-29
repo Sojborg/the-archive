@@ -28,6 +28,16 @@ app.get("/books", async (req, res) => {
   }
 });
 
+app.post("/addbooktolist", (request, response) => {
+  try {
+    console.log(request.body);
+    repository.getDocument(request.body);
+    response.sendStatus(200);
+  } catch (e) {
+    console.error(e);
+  }
+});
+
 app.post("/savebook", (request, response) => {
   try {
     console.log(request.body);
