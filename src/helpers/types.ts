@@ -1,3 +1,5 @@
+import { BookStatus } from "./BookStatus";
+
 export interface IBook {
   id: string;
   title: string;
@@ -8,4 +10,5 @@ export interface IBook {
   publisher: string;
   synopsis: string;
   notes?: string;
+  status: BookStatus;
 }

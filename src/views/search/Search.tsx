@@ -32,7 +32,7 @@ export const Search = (props: ISearchBarProps) => {
               pageCount: volumeInfo.pageCount,
               coverImageUrl: volumeInfo.imageLinks && volumeInfo.imageLinks.thumbnail,
             } as IBook;
-            return <Book book={book} />;
+            return <Book key={book.id} book={book} />;
           })}
         </ul>
       )}

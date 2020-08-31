@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { addBookList, removeBook, saveBook } from "../helpers/bookservice";
+import { BookStatus } from "../helpers/BookStatus";
 import { IBook } from "../helpers/types";
 import "./Book.scss";
 import { TextEditor } from "./TextEditor";
@@ -13,17 +14,16 @@ interface IDisplayState {
 }
 
 export const Book = (props: IBookProps) => {
-  const [notes, setNotes] = useState<string | undefined>(undefined);
-  const { book } = props;
+  const [book, setBook] = useState<IBook>(props.book);
   const [displayState, setDisplayState] = useState({
     notes: false,
   } as IDisplayState);
 
   useEffect(() => {
-    if (book.notes) {
-      setNotes(book.notes);
+    if (book) {
+      setBook(book);
     }
-  }, [book.notes]);
+  }, [book]);
 
   const onAddToListClick = () => {
     addBookList(book);
@@ -34,7 +34,7 @@ export const Book = (props: IBookProps) => {
   };
 
   const save = async () => {
-    await saveBook({ ...book, notes: notes });
+    await saveBook({ ...book });
   };
 
   const toggleNotes = (toggleName: keyof IDisplayState) => {
@@ -43,6 +43,13 @@ export const Book = (props: IBookProps) => {
       [toggleName]: !displayState[toggleName],
     });
   };
+
+  const update = (propertyName: keyof IBook, value: any) => {
+    setBook({
+      ...book,
+      [propertyName]: value
+    })
+  }
 
   return (
     <li key={book.id} className={"book"}>
@@ -64,6 +71,13 @@ export const Book = (props: IBookProps) => {
           <p>Publisher: {book.publisher}</p>
           <p>Page count: {book.pageCount}</p>
           <p>Product id: {book.productId}</p>
+          <p>
+            Status: <select onChange={(e) => update('status', e.target.value)} value={book.status}>
+              <option value={BookStatus.ToRead}>To read</option>
+              <option value={BookStatus.Reading}>Reading</option>
+              <option value={BookStatus.Done}>Done</option>
+            </select>
+          </p>
         </div>
       </div>
       <div className={"book__notes"}>
@@ -71,16 +85,16 @@ export const Book = (props: IBookProps) => {
         {displayState.notes && (
           <div>
             <TextEditor
-              value={notes || ""}
+              value={book.notes || ""}
               onChange={(newContent) => {
                 console.log(newContent)
-                 setNotes(newContent)}
+                update('notes', newContent)}
               }
             />
-            <button onClick={save}>Save notes</button>
           </div>
         )}
       </div>
+      <button onClick={save}>Save changes</button>
     </li>
   );
 };
