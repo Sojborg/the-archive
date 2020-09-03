@@ -1,5 +1,18 @@
 .books {
 
+  &__actions {
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  &__new-book-button {
+
+    a {
+      text-decoration: none;
+      color: black;
+    }
+  }
+
   &__list {
     list-style-type: none;
     padding: 0;

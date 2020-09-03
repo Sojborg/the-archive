@@ -95,11 +95,6 @@ export const Book = (props: IBookProps) => {
                       onChange={(e) => update('status', e)} 
                       value={book.status ? book.status.toString() : ''} 
                       options={options} />
-            Status: <select onChange={(e) => update('status', e.target.value)} value={book.status}>
-              <option value={BookStatus.ToRead}>To read</option>
-              <option value={BookStatus.Reading}>Reading</option>
-              <option value={BookStatus.Done}>Done</option>
-            </select>
           </p>
         </div>
       </div>
@@ -117,7 +112,7 @@ export const Book = (props: IBookProps) => {
           </div>
         )}
       </div>
-      <button onClick={save}>Save changes</button>
+      <Button themeType={"outline"} onClick={save}>Save changes</Button>
     </li>
   );
 };
