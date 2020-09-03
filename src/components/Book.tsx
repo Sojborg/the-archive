@@ -4,6 +4,8 @@ import { BookStatus } from "../helpers/BookStatus";
 import { IBook } from "../helpers/types";
 import "./Book.scss";
 import { TextEditor } from "./TextEditor";
+import {Button} from 'react-md';
+import {Select} from '@react-md/form';
 
 interface IBookProps {
   book: IBook;
@@ -51,16 +53,33 @@ export const Book = (props: IBookProps) => {
     })
   }
 
+  const options = ([
+    {
+      label: 'To read',
+      value: BookStatus.ToRead
+    },
+    {
+      label: 'Reading',
+      value: BookStatus.Reading
+    },
+    {
+      label: 'Done',
+      value: BookStatus.Done
+    },
+  ]
+
+  )
+
   return (
     <li key={book.id} className={"book"}>
       <div className={"book__content"}>
         <div className={"book__actions"}>
-          <button className={"book__actions__add"} onClick={onAddToListClick}>
+          <Button themeType={"outline"} className={"book__actions__add"} onClick={onAddToListClick}>
             Add to list
-          </button>
-          <button className={"book__actions__remove"} onClick={onRemoveClick}>
+          </Button>
+          <Button themeType={"outline"} className={"book__actions__remove"} onClick={onRemoveClick}>
             Remove
-          </button>
+          </Button>
         </div>
         <img src={book.coverImageUrl} alt={book.coverImageUrl} />
         <div className={"book__description"}>
@@ -72,6 +91,10 @@ export const Book = (props: IBookProps) => {
           <p>Page count: {book.pageCount}</p>
           <p>Product id: {book.productId}</p>
           <p>
+            Status: <Select id={'test'} 
+                      onChange={(e) => update('status', e)} 
+                      value={book.status ? book.status.toString() : ''} 
+                      options={options} />
             Status: <select onChange={(e) => update('status', e.target.value)} value={book.status}>
               <option value={BookStatus.ToRead}>To read</option>
               <option value={BookStatus.Reading}>Reading</option>
