@@ -9,6 +9,8 @@ import {Select} from '@react-md/form';
 
 interface IBookProps {
   book: IBook;
+  onSaveBook?(book: IBook): void;
+  onDeleteBook?(bookId: string): void;
 }
 
 interface IDisplayState {
@@ -29,14 +31,6 @@ export const Book = (props: IBookProps) => {
 
   const onAddToListClick = () => {
     addBookList(book);
-  };
-
-  const onRemoveClick = () => {
-    removeBook(book.id);
-  };
-
-  const save = async () => {
-    await saveBook({ ...book });
   };
 
   const toggleNotes = (toggleName: keyof IDisplayState) => {
@@ -77,7 +71,7 @@ export const Book = (props: IBookProps) => {
           <Button themeType={"outline"} className={"book__actions__add"} onClick={onAddToListClick}>
             Add to list
           </Button>
-          <Button themeType={"outline"} className={"book__actions__remove"} onClick={onRemoveClick}>
+          <Button themeType={"outline"} className={"book__actions__remove"} onClick={() => props.onDeleteBook && props.onDeleteBook(book.id)}>
             Remove
           </Button>
         </div>
@@ -112,7 +106,7 @@ export const Book = (props: IBookProps) => {
           </div>
         )}
       </div>
-      <Button themeType={"outline"} onClick={save}>Save changes</Button>
+      <Button themeType={"outline"} onClick={() => props.onSaveBook && props.onSaveBook(book)}>Save changes</Button>
     </li>
   );
 };

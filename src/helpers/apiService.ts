@@ -11,3 +11,15 @@ export const postRequest = async <T>(url: string, data: T) => {
     });
   } catch (e) {}
 };
+
+export const getRequest = async <T>(url: string) => {
+  try {
+    const response = await fetch(url);
+    if (response.ok) {
+      return response.json();
+    }
+    else {
+      
+    }
+  } catch (e) {}
+};
