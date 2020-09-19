@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import { Book } from "../../components/Book";
 import { Navigation } from "../../helpers/navigation";
 import { IBook } from "../../helpers/types";
-import { useFetch } from "../../hooks/useFetch";
 import './Books.scss';
 import { Button, LinearProgress } from "react-md";
 import { getBooks, removeBook, saveBook } from "../../helpers/bookservice";

@@ -1,0 +1,30 @@
+.search {
+  &__header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  &__view-mode {
+    display: flex;
+    justify-items:center;
+    align-items: center;
+
+    span {
+      margin-left: 24px;
+    }
+  }
+
+  &__view-mode-active {
+    font-weight: bold;
+    text-decoration: underline;
+  }  
+
+  ul {
+    list-style-type: none;
+  }
+
+  &__list-small {
+    
+  }
+}
