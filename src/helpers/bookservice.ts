@@ -10,9 +10,18 @@ export const saveBook = async (book: IBook) => {
 };
 
 export const addBookList = async (book: IBook) => {
-  postRequest('/addbooktolist', book);
+  return await postRequest('/addbooktolist', book);
 };
 
 export const removeBook = async (id: string) => {
   await postRequest('/removebook', {id: id});
+}
+
+export const getNumberOfBooks = async () => {
+
+  return await getRequest<Promise<any>>(`/numberofbooks?no-cache=${getRandomInt(999999)}`);
+}
+
+const getRandomInt = (max: number) => {
+  return Math.floor(Math.random() * Math.floor(max));
 }

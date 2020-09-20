@@ -3,6 +3,7 @@ import { SearchBook } from "./SearchBook";
 import { IBook } from "../../helpers/types";
 import { useFetch } from "../../hooks/useFetch";
 import "./Search.scss";
+import { addBookList, getNumberOfBooks } from "../../helpers/bookservice";
 
 interface ISearchBarProps {
   query?: string;
@@ -16,18 +17,32 @@ export enum SearchViewMode {
 export const Search = (props: ISearchBarProps) => {
   const [query, setQuery] = useState("");
   const [viewMode, setViewMode] = useState(SearchViewMode.small);
+  const [numberOfBooks, setNumberOfBooks] = useState<number | undefined>(undefined);
   const response = useFetch<any>(`/searchbook?q=${query}`);
 
   useEffect(() => {
-    console.log("query", props.query);
     if (props.query) {
       setQuery(props.query);
     }
   }, [props.query]);
 
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await getNumberOfBooks();    
+      setNumberOfBooks(response.numberOfBooks);
+    }
+    fetchData();
+  }, [])
+
   const toggleViewMode = (viewMode: SearchViewMode) => {
     setViewMode(viewMode);
   };
+
+  const handleOnAddBook = async (book: IBook) => {
+    await addBookList(book);    
+    const response = await getNumberOfBooks();    
+    setNumberOfBooks(response.numberOfBooks);
+  }
 
   const viewClass = `search__list-${viewMode}`
 
@@ -59,7 +74,6 @@ export const Search = (props: ISearchBarProps) => {
           </span>
         </div>
       </div>
-      {console.log("response", response)}
       {!response.error && response.response && response.response.items && (
         <ul className={viewClass}>
           {response.response.items.map((apiBook: any) => {
@@ -74,10 +88,22 @@ export const Search = (props: ISearchBarProps) => {
                 volumeInfo.imageLinks && volumeInfo.imageLinks.thumbnail,
             } as IBook;
             console.log("book", book);
-            return <SearchBook key={book.id} book={book} viewMode={viewMode} />;
+            return <SearchBook 
+                      key={book.id} 
+                      book={book} 
+                      onAddBook={handleOnAddBook}
+                      viewMode={viewMode} />;
           })}
         </ul>
       )}
+      <div className={'search__books-summary'}>
+        <div className={'search__books-summary__content'}>
+          <div className={'search__books-summary__text'}>Archived books</div>
+          <div className={'search__books-summary__number'}>
+            {numberOfBooks ? numberOfBooks : '-'}
+          </div>
+        </div>
+      </div>
     </div>
   );
 };

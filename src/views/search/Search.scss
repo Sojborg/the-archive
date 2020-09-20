@@ -22,9 +22,39 @@
 
   ul {
     list-style-type: none;
+    padding: 0;
   }
 
   &__list-small {
     
+  }
+
+  &__books-summary {
+    display: flex;
+    justify-content: flex-end;
+    position: fixed;
+    bottom: 24px;
+    right: -4px;
+
+    &__content {
+      border-top: 1px solid grey;
+      border-bottom: 1px solid grey;
+      border-left: 1px solid grey;
+      background-color: white;
+      border-radius: 4px;
+      width: 150px;
+      padding: 12px;
+    }
+
+    &__text {
+      font-size: 1;
+      color: grey;
+    }
+
+    &__number {
+      text-align: center;
+      font-size: 1.5rem;
+      font-weight: bold;
+    }
   }
 }

@@ -28,11 +28,24 @@ app.get("/books", async (req, res) => {
   }
 });
 
-app.post("/addbooktolist", (request, response) => {
+app.get("/numberofbooks", async (req, res) => {
+  try {
+    res.setHeader("Content-Type", "application/json");
+    const count = await repository.countCollection();
+    const payload = {numberOfBooks: count};
+    res.send(JSON.stringify(payload));
+  } catch (e) {
+    console.error(e);
+  }
+});
+
+app.post("/addbooktolist", async (request, response) => {
   try {
     console.log(request.body);
-    repository.getDocument(request.body);
-    response.sendStatus(200);
+    await repository.getDocument(request.body);
+    const numberOfBooksCount = await repository.countCollection();
+    const payload = {numberOfBooks: numberOfBooksCount};
+    response.send(JSON.stringify(payload));
   } catch (e) {
     console.error(e);
   }

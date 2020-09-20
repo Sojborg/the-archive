@@ -7,22 +7,24 @@ import {SearchViewMode} from './Search';
 
 interface IBookProps {
   book: IBook;
+  viewMode: SearchViewMode;
+
   onSaveBook?(book: IBook): void;
   onDeleteBook?(bookId: string): void;
-  viewMode: SearchViewMode;
+  onAddBook?(book: IBook): void;
 }
 
 export const SearchBook = (props: IBookProps) => {
-  const {book, viewMode} = props;
+  const {book, viewMode, onAddBook} = props;
 
-  const onAddToListClick = () => {
-    addBookList(book);
+  const onAddToListClick = async () => {
+    onAddBook && onAddBook(book);
   };
 
   return (
     <li key={book.id} className={`search-book search-book-${SearchViewMode[viewMode]}`}>
       <div className={`search-book__content search-book__content-${SearchViewMode[viewMode]}`}>
-        <div className={"search-book__actions"}>
+        <div className={`search-book__actions search-book__actions-${SearchViewMode[viewMode]}`}>
           <Button themeType={"outline"} className={"search-book__actions__add"} onClick={onAddToListClick}>
             Add to list
           </Button>
