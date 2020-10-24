@@ -5,7 +5,7 @@ import { IBooksResponse } from '../../src/common/models/IBooksResponse';
 export const books = async (req: any, res: any) => {
   try {
     res.setHeader("Content-Type", "application/json");
-    const books = await repository.queryCollection();
+    const books = await repository.queryCollection(req.body);
     const numberOfBooks = await repository.countCollection();
 
     const response = {

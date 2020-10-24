@@ -6,29 +6,30 @@ import './Books.scss';
 import { Button, LinearProgress } from "react-md";
 import { getBooks, removeBook, saveBook } from "../../helpers/bookservice";
 import { IBook } from '../../common/models/IBooksResponse';
+import { IBooksRequest } from "../../common/models/IBooksRequest";
 
 export const Books = () => {
   const [books, setBooks] = useState<IBook[] | undefined>(undefined);
   const [numberOfBooks, setNumberOfBooks] = useState<number | undefined>(undefined);
+  const [page, setPage] = useState<number>(1);
   const [isLoading, setIsLoading] = useState(false);
+
+  const fetchBooks = async () => {
+    setIsLoading(true);
+    const response = await getBooks({page, pageSize: 5} as IBooksRequest);
+    setBooks(response.books);
+    setNumberOfBooks(response.numberOfBooks);
+    setIsLoading(false);
+  }
   
   useEffect(() => {
-    const fetchData = async () => {
-      setIsLoading(true);
-      const response = await getBooks();
-      setBooks(response.books);
-      setNumberOfBooks(response.numberOfBooks);
-      setIsLoading(false);
-    }
-    fetchData();
-  }, []);
+    fetchBooks();
+  }, [page]);
 
   const onRemoveBook = async (bookId: string) => { 
     setIsLoading(true);
     await removeBook(bookId);
-    const response = await getBooks();
-    setBooks(response.books);
-    setNumberOfBooks(response.numberOfBooks);
+    await fetchBooks();
     setIsLoading(false);
   }
 
@@ -49,6 +50,8 @@ export const Books = () => {
         <Button themeType={"outline"} className={'books__new-book-button'}>
           <Link to={Navigation.newbook}>New book</Link>
         </Button>
+        <Button onClick={() => setPage(page-1)}>{"<"}</Button>
+        <Button onClick={() => setPage(page+1)}>{">"}</Button>
       </div>
       <ul className={'books__list'}>
         {books &&

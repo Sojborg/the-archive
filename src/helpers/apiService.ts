@@ -1,6 +1,6 @@
-export const postRequest = async <T>(url: string, data: T) => {
+export const postRequest = async <T>(url: string, data: T): Promise<any> => {
   try {
-    await fetch(url, {
+    return await fetch(url, {
       method: 'POST',
       cache: 'no-cache',
       headers: {

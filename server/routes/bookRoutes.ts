@@ -3,7 +3,7 @@ import { addbooktolist, books, numberofbooks, removebook, savebook, searchbook }
 var express = require('express');
 var router = express.Router();
 
-router.get('/', books);
+router.post('/', books);
 
 router.get('/numberofbooks', numberofbooks);
 

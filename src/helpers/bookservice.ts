@@ -1,8 +1,10 @@
+import { IBooksRequest } from "../common/models/IBooksRequest";
 import { IBook, IBooksResponse } from "../common/models/IBooksResponse";
 import { getRequest, postRequest } from "./apiService";
 
-export const getBooks = async (): Promise<IBooksResponse> => {
-  return await getRequest<Promise<IBooksResponse>>('/books');
+export const getBooks = async (booksRequest: IBooksRequest): Promise<IBooksResponse> => {
+  return postRequest<IBooksRequest>('/books', booksRequest)
+    .then(response => response.json());
 };
 
 export const saveBook = async (book: IBook) => {

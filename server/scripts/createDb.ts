@@ -8,6 +8,5 @@ repository.getDatabase()
             repository.getDocument(book)
         });
     })
-    .then(() => repository.queryCollection())
     .then(() => { repository.exit(`Completed successfully`); })
     .catch((error) => { repository.exit(`Completed with error ${JSON.stringify(error)}`) });
