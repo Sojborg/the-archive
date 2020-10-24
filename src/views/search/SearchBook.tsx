@@ -1,9 +1,9 @@
-import React from "react";
+import React, { useRef } from "react";
 import "./SearchBook.scss";
 import {Button} from 'react-md';
-import { IBook } from "../../helpers/types";
 import { addBookList } from "../../helpers/bookservice";
 import {SearchViewMode} from './Search';
+import { IBook } from "../../common/models/IBooksResponse";
 
 interface IBookProps {
   book: IBook;
@@ -16,6 +16,7 @@ interface IBookProps {
 
 export const SearchBook = (props: IBookProps) => {
   const {book, viewMode, onAddBook} = props;
+  const addButtonRef = useRef<HTMLButtonElement | null>(null);
 
   const onAddToListClick = async () => {
     onAddBook && onAddBook(book);
@@ -25,7 +26,8 @@ export const SearchBook = (props: IBookProps) => {
     <li key={book.id} className={`search-book search-book-${SearchViewMode[viewMode]}`}>
       <div className={`search-book__content search-book__content-${SearchViewMode[viewMode]}`}>
         <div className={`search-book__actions search-book__actions-${SearchViewMode[viewMode]}`}>
-          <Button themeType={"outline"} className={"search-book__actions__add"} onClick={onAddToListClick}>
+          
+          <Button ref={addButtonRef} themeType={"outline"} className={"search-book__actions__add"} onClick={onAddToListClick}>
             Add to list
           </Button>
         </div>

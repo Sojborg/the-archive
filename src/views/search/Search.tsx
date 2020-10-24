@@ -1,9 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { SearchBook } from "./SearchBook";
-import { IBook } from "../../helpers/types";
 import { useFetch } from "../../hooks/useFetch";
 import "./Search.scss";
 import { addBookList, getNumberOfBooks } from "../../helpers/bookservice";
+import { useSpring, animated, useTransition, useChain } from "react-spring";
+import { motion } from "framer-motion"
+import { IBook } from "../../common/models/IBooksResponse";
 
 interface ISearchBarProps {
   query?: string;
@@ -17,8 +19,11 @@ export enum SearchViewMode {
 export const Search = (props: ISearchBarProps) => {
   const [query, setQuery] = useState("");
   const [viewMode, setViewMode] = useState(SearchViewMode.small);
-  const [numberOfBooks, setNumberOfBooks] = useState<number | undefined>(undefined);
-  const response = useFetch<any>(`/searchbook?q=${query}`);
+  const [addingItem, setAddingItem] = useState<string | undefined>(undefined);
+  const [numberOfBooks, setNumberOfBooks] = useState<number | undefined>(
+    undefined
+  );
+  const response = useFetch<any>(`/books/searchbook?q=${query}`);
 
   useEffect(() => {
     if (props.query) {
@@ -28,23 +33,24 @@ export const Search = (props: ISearchBarProps) => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await getNumberOfBooks();    
+      const response = await getNumberOfBooks();
       setNumberOfBooks(response.numberOfBooks);
-    }
+    };
     fetchData();
-  }, [])
+  }, []);
 
   const toggleViewMode = (viewMode: SearchViewMode) => {
     setViewMode(viewMode);
   };
 
   const handleOnAddBook = async (book: IBook) => {
-    await addBookList(book);    
-    const response = await getNumberOfBooks();    
+    setAddingItem(book.id);
+    await addBookList(book);
+    const response = await getNumberOfBooks();
     setNumberOfBooks(response.numberOfBooks);
-  }
+  };
 
-  const viewClass = `search__list-${viewMode}`
+  const viewClass = `search__list-${viewMode}`;
 
   return (
     <div className={"search"}>
@@ -88,19 +94,31 @@ export const Search = (props: ISearchBarProps) => {
                 volumeInfo.imageLinks && volumeInfo.imageLinks.thumbnail,
             } as IBook;
             console.log("book", book);
-            return <SearchBook 
-                      key={book.id} 
-                      book={book} 
-                      onAddBook={handleOnAddBook}
-                      viewMode={viewMode} />;
+            return (
+              <>
+                {addingItem === book.id && (                  
+                    <motion.div className={'motion-test'}
+                    animate={{ y: '100%' }}
+                    transition={{ ease: "easeOut", duration: 2 }}
+                />
+                )}
+                <SearchBook
+                  key={book.id}
+                  book={book}
+                  onAddBook={handleOnAddBook}
+                  viewMode={viewMode}
+                />
+                ;
+              </>
+            );
           })}
         </ul>
       )}
-      <div className={'search__books-summary'}>
-        <div className={'search__books-summary__content'}>
-          <div className={'search__books-summary__text'}>Archived books</div>
-          <div className={'search__books-summary__number'}>
-            {numberOfBooks ? numberOfBooks : '-'}
+      <div className={"search__books-summary"}>
+        <div className={"search__books-summary__content"}>
+          <div className={"search__books-summary__text"}>Archived books</div>
+          <div className={"search__books-summary__number"}>
+            {numberOfBooks ? numberOfBooks : "-"}
           </div>
         </div>
       </div>

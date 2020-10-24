@@ -1,4 +1,13 @@
-import { BookStatus } from "./BookStatus";
+export enum BookStatus {
+  ToRead,
+  Reading,
+  Done
+}
+
+export interface IBooksResponse {
+  books: IBook[];
+  numberOfBooks: number;
+}
 
 export interface IBook {
   id: string;

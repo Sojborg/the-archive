@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
+import { IBook } from '../../common/models/IBooksResponse';
 import { TextEditor } from '../../components/TextEditor';
 import { saveBook } from '../../helpers/bookservice';
-import { IBook } from '../../helpers/types';
 
 const bookInfo = {
   coverImageUrl:

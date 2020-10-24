@@ -1,5 +1,11 @@
 .books {
 
+  &__header{
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+  }
+
   &__actions {
     display: flex;
     justify-content: flex-end;

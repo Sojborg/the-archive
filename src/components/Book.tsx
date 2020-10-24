@@ -1,19 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { addBookList, removeBook, saveBook } from "../helpers/bookservice";
-import { BookStatus } from "../helpers/BookStatus";
-import { IBook } from "../helpers/types";
 import "./Book.scss";
 import { TextEditor } from "./TextEditor";
 import {Button} from 'react-md';
 import {Select} from '@react-md/form';
+import { IBook, BookStatus } from "../common/models/IBooksResponse";
 
 interface IBookProps {
   book: IBook;
   onSaveBook?(book: IBook): void;
-  onDeleteBook?(bookId: string): void;
+  onDeleteBook?(bookId: string): void; 
 }
 
-interface IDisplayState {
+interface IDisplayState { 
   notes: boolean;
 }
 

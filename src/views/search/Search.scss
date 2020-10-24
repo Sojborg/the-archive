@@ -58,3 +58,24 @@
     }
   }
 }
+
+.add-item-animated {
+  position: absolute;
+  right: 40px;
+  height: 50px;
+  width: 50px;
+  background-color: red;
+  animation: 2s infinite running slidedown;
+  z-index: 1;
+
+  &-item {
+  }
+}
+
+@keyframes slidedown {
+  0% {
+  }
+  100% {
+    bottom: 40px;
+  }
+}
