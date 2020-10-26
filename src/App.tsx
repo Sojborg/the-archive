@@ -7,6 +7,7 @@ import {
   Route,
   Link,
   RouteComponentProps,
+  useHistory,
 } from "react-router-dom";
 import { Dashboard } from "./views/dashboard/Dashboard";
 import { CreateBook } from "./views/books/CreateBook";
@@ -16,12 +17,14 @@ import { Search } from "./views/search/Search";
 import { SearchProvider } from "./views/SearchProvider";
 
 function App() {
+
   return (
     <div className={"app"}>
       <Router>
         <SearchProvider>
           <div>
             <nav className={"app__navigation"}>
+              <Link to={Navigation.home} className='app__logo' />
               <ul>
                 <li>
                   <Link to={Navigation.home}>Home</Link>

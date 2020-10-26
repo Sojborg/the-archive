@@ -3,6 +3,15 @@
 @include react-md-utils;
 
 .app {
+  &__logo {
+    width: 75px;
+    height: 75px;
+    background-image: url('./graphics/books_icon.png');
+    background-size: 75px;
+    background-repeat: no-repeat;
+    margin-right: 32px;
+  }  
+
   &__navigation {
     display: flex;
     flex-direction: row;
