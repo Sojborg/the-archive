@@ -9,6 +9,11 @@
   &__actions {
     display: flex;
     justify-content: flex-end;
+    gap: 24px;
+
+    &__sorting {
+      width: 150px;
+    }
   }
 
   &__new-book-button {

@@ -1,11 +1,18 @@
 import { repository } from "../repository/repository";
 import { googleBooksService } from "../services/google-books-service";
 import { IBooksResponse } from '../../src/common/models/IBooksResponse';
+import { IBooksRequest } from "../../src/common/models/IBooksRequest";
 
 export const books = async (req: any, res: any) => {
   try {
     res.setHeader("Content-Type", "application/json");
-    const books = await repository.queryCollection(req.body);
+
+    const request = {
+      ...req.body,
+      pageSize: req.body.pageSize < 1 ? 1 : req.body.pageSize
+    } as IBooksRequest;
+
+    const books = await repository.queryCollection(request);
     const numberOfBooks = await repository.countCollection();
 
     const response = {

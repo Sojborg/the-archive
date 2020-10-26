@@ -104,14 +104,14 @@ class Repository {
    */
   queryCollection(booksRequest: IBooksRequest) {
     console.log(`Querying collection through index:\n${config.collection.id}`);
-    const { page, pageSize } = booksRequest;
+    const { page, pageSize, sortBy, sorting } = booksRequest;
 
     return new Promise((resolve, reject) => {
       this.client
         .queryDocuments(
           this.collectionUrl,
           `SELECT * FROM b
-            ORDER BY b.title
+            ORDER BY b.${sortBy} ${sorting}
             OFFSET ${(page-1)*pageSize} LIMIT ${pageSize}`
         )
         .toArray((err, results) => {
