@@ -1,7 +1,9 @@
+require("dotenv").config();
 import express = require("express");
 import logger from "morgan";
 import bodyParser from "body-parser";
 import bookRouter from './routes/bookRoutes';
+import jwt, { VerifyErrors } from 'jsonwebtoken';
 
 // Create a new express app instance
 const app: express.Application = express();
@@ -17,5 +19,19 @@ app.listen(5000, function () {
   console.log("App is listening on port 5000!");
 });
 
-app.use('/books', bookRouter);
+const authenticateToken = (request: any, response: any, next: any) => {
+  const authHeader = request.headers['authorization']
+  const token = authHeader && authHeader.split(' ')[1]
+  console.log('token', token);
+  if (token == null) return response.sendStatus(401)
+
+  jwt.verify(token, process.env.ACCESS_TOKEN_SECRET!, (error: VerifyErrors | null, user: any) => {
+    console.log(error)
+    if (error) return response.sendStatus(403)
+    request.user = user
+    next()
+  })
+}
+
+app.use('/books', authenticateToken, bookRouter);
 

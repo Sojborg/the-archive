@@ -1,0 +1,24 @@
+POST http://localhost:4000/login
+Content-Type: application/json
+
+{
+  "username":"jesper"
+}
+
+### Refresh token
+
+POST http://localhost:4000/token
+Content-Type: application/json
+
+{
+  "token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiamVzcGVyIiwiaWF0IjoxNjA0Nzk0NTMzfQ.Lik3Md7SmWE7VH3xpD7XhT4RHMk8AgXqNZbdCuJmwF0"
+}
+
+###
+
+POST http://localhost:5000/books
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiamVzcGVyIiwiaWF0IjoxNjA0Nzk0NTY3LCJleHAiOjE2MDQ3OTQ1OTd9.AqVO413d0fKvTHspD4HUOyfZh7xXv8nmqr7n6y0dwak
+Content-Type: application/json
+
+{"page":1,"sortBy":"title","sorting":"asc","pageSize":5}
+
