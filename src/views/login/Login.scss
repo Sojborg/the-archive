@@ -1,0 +1,24 @@
+.login {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 80vh;
+  width: 100vw;
+
+  &__container {
+    display: flex;
+    flex-direction: column;
+    width: 400px;
+    border: 1px solid grey;
+    padding: 24px;
+    max-height: 350px;
+  }
+
+  &__control {
+    margin-bottom: 24px;
+
+    &__button {
+      align-self: flex-end;
+    }
+  }
+}

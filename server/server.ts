@@ -3,6 +3,7 @@ import express = require("express");
 import logger from "morgan";
 import bodyParser from "body-parser";
 import bookRouter from './routes/bookRoutes';
+import loginRouter from './routes/loginRoutes';
 import jwt, { VerifyErrors } from 'jsonwebtoken';
 
 // Create a new express app instance
@@ -34,4 +35,5 @@ const authenticateToken = (request: any, response: any, next: any) => {
 }
 
 app.use('/books', authenticateToken, bookRouter);
+app.use('/login', loginRouter);
 
