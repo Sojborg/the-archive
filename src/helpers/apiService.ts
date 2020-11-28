@@ -1,12 +1,16 @@
+const headers = () => {
+  return {
+    'Content-Type': 'application/json',
+    'Authorization': `Bearer: ${window.localStorage.getItem('access_token')}`
+  }
+};
+
 export const postRequest = async <T>(url: string, data: T): Promise<any> => {
   try {
     const response = await fetch(url, {
       method: 'POST',
       cache: 'no-cache',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer: ${window.localStorage.getItem('access_token')}`
-      },
+      headers: headers(),
       referrerPolicy: 'no-referrer',
       body: JSON.stringify(data),
     });
@@ -25,7 +29,10 @@ export const postRequest = async <T>(url: string, data: T): Promise<any> => {
 
 export const getRequest = async <T>(url: string) => {
   try {
-    const response = await fetch(url);
+    const response = await fetch(url, {
+      method: 'GET',      
+      headers: headers()
+    });
 
     if (response.status === 401 || response.status === 403) {
       window.localStorage.removeItem('access_token');

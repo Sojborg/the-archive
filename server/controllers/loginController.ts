@@ -1,19 +1,54 @@
 require("dotenv").config();
 import jwt, { VerifyErrors } from "jsonwebtoken";
+import * as argon2 from 'argon2';
+import { repository } from "../repository/repository";
+
+export interface IUser {
+  username: string;
+  password: string;
+}
 
 let refreshTokens: string[] = [];
 
+export const signUp = async (request: any, response: any) => {
+  const username = request.body.username;
+  const password = request.body.password;
+
+  const passwordHashed = await argon2.hash(password);
+
+  const user: IUser = {
+    username,
+    password: passwordHashed
+  }
+
+  repository.replaceDocument('Users', user);
+
+  response.json({username})
+}
+
 export const login = async (request: any, response: any) => {
-  // auth user
   console.log('body', request.body)
 
+  // auth user
   const username = request.body.username;
-  const user = { name: username};
+  const password = request.body.password;
 
-  const accessToken = generateAccessToken(user);
-  const refreshToken = jwt.sign(user, process.env.REFRESH_TOKEN_SECRET!);
-  refreshTokens.push(refreshToken);
-  response.json({accessToken, refreshToken});
+  const user = await repository.getUserByUsername(username);
+
+  if (!user) {
+    return response.sendStatus(401);
+  }
+
+  const correctPassword = await argon2.verify(user.password, password);
+
+  if (correctPassword) {
+    const accessToken = generateAccessToken(user);
+    const refreshToken = jwt.sign(user, process.env.REFRESH_TOKEN_SECRET!);
+    refreshTokens.push(refreshToken);
+    response.json({accessToken, refreshToken});
+  } else {
+    return response.sendStatus(401);
+  }
 }
 
 

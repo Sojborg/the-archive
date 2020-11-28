@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Button, TextField } from "react-md";
-import { useHistory, useLocation } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { postRequest } from "../../helpers/apiService";
 import { Navigation } from "../../helpers/navigation";
 import "./Login.scss";
@@ -11,7 +11,7 @@ export const Login = () => {
   const history = useHistory();
 
   const login = async () => {
-    const response = await postRequest("/login", { username: username });
+    const response = await postRequest("/login", { username: username, password: password });
     window.localStorage.setItem('access_token', response.accessToken);
     history.push(Navigation.home);
   };

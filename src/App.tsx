@@ -7,7 +7,6 @@ import {
   Route,
   Link,
   RouteComponentProps,
-  useHistory,
 } from "react-router-dom";
 import { Dashboard } from "./views/dashboard/Dashboard";
 import { CreateBook } from "./views/books/CreateBook";

@@ -1,6 +1,7 @@
 import { DocumentClient } from "documentdb";
 import { config } from "../config";
-import { IBooksRequest } from '../../src/common/models/IBooksRequest';
+import { IBooksRequest } from "../../src/common/models/IBooksRequest";
+import { IUser } from "../controllers/loginController";
 
 var url = require("url");
 
@@ -35,6 +36,26 @@ class Repository {
           resolve(result);
         }
       });
+    });
+  }
+
+  createTable(tableName: string) {
+    if (!tableName) {
+      new Error("Table name not supplied");
+    }
+
+    return new Promise((resolve, reject) => {
+      this.client.createCollection(
+        this.databaseUrl,
+        {
+          id: tableName,
+        },
+        { offerThroughput: 400 },
+        (err, created) => {
+          if (err) reject(err);
+          else resolve(created);
+        }
+      );
     });
   }
 
@@ -79,12 +100,12 @@ class Repository {
       this.client.readDocument(documentUrl, (err, result) => {
         if (err) {
           if (err.code == this.HttpStatusCodes.NOTFOUND) {
-            console.log('DOCUMENT', document);
+            console.log("DOCUMENT", document);
             this.client.createDocument(
               this.collectionUrl,
               document,
               (err, created) => {
-                console.log('DONE', err, created)
+                console.log("DONE", err, created);
                 if (err) reject(err);
                 else resolve(created);
               }
@@ -112,7 +133,7 @@ class Repository {
           this.collectionUrl,
           `SELECT * FROM b
             ORDER BY b.${sortBy} ${sorting}
-            OFFSET ${(page-1)*pageSize} LIMIT ${pageSize}`
+            OFFSET ${(page - 1) * pageSize} LIMIT ${pageSize}`
         )
         .toArray((err, results) => {
           if (err) reject(err);
@@ -133,10 +154,7 @@ class Repository {
 
     return new Promise((resolve, reject) => {
       this.client
-        .queryDocuments(
-          this.collectionUrl,
-          'SELECT VALUE COUNT(1) FROM books'
-        )
+        .queryDocuments(this.collectionUrl, "SELECT VALUE COUNT(1) FROM books")
         .toArray((err, results) => {
           if (err) reject(err);
           else {
@@ -154,8 +172,8 @@ class Repository {
   /**
    * Replace the document by ID.
    */
-  replaceFamilyDocument(document: any) {
-    let documentUrl = `${this.collectionUrl}/docs/${document.id}`;
+  replaceDocument(tableName: string, document: any) {
+    let documentUrl = `${this.databaseUrl}/colls/${tableName}/docs/${document.id}`;
     console.log(`Replacing document:\n${document.id}\n`);
 
     return new Promise((resolve, reject) => {
@@ -197,6 +215,27 @@ class Repository {
         else resolve(null);
       });
     });
+  }
+
+  getUserByUsername(username: string): Promise<IUser | null> {
+    try {
+      return new Promise((resolve, reject) => {
+        this.client
+          .queryDocuments<IUser>(
+            `${this.databaseUrl}/colls/Users`,
+            `SELECT * FROM Users WHERE Users.username = "${username}"`
+          )
+          .toArray((err, results) => {
+            if (err) reject(err);
+            else {
+              resolve(results.length > 0 ? results[0] : null);
+            }
+          });
+      });
+    } catch (e) {
+      console.error('getUserByUsername', e);
+      throw e;
+    }
   }
 
   /**

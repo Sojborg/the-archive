@@ -1,9 +1,8 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { SearchBook } from "./SearchBook";
 import { useFetch } from "../../hooks/useFetch";
 import "./Search.scss";
 import { addBookList, getNumberOfBooks } from "../../helpers/bookservice";
-import { useSpring, animated, useTransition, useChain } from "react-spring";
 import { motion } from "framer-motion"
 import { IBook } from "../../common/models/IBooksResponse";
 

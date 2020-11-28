@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { getRequest } from "../helpers/apiService";
 
 export const useFetch = <T, >(url: string, options: any = null) => {
   const [response, setResponse] = useState<T | undefined>(undefined);
@@ -9,14 +10,8 @@ export const useFetch = <T, >(url: string, options: any = null) => {
     const fetchData = async () => {
       try {
         setIsFetchingData(true);
-        const res = await fetch(url, options);
-        if (res.ok) {
-          const json = await res.json();
-          setResponse(json);
-        }
-        else {
-          setError(new Error(res.statusText));
-        }
+        const response = await getRequest(url);
+        setResponse(response);
       } catch (e) {
         setError(e);
       } finally {

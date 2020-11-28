@@ -52,7 +52,7 @@ export const addbooktolist = async (req: any, res: any) => {
 export const savebook = async (req: any, res: any) => {
   try {
     console.log(req.body);
-    repository.replaceFamilyDocument(req.body);
+    repository.replaceDocument('Books', req.body);
     res.sendStatus(200);
   } catch (e) {
     console.error(e);

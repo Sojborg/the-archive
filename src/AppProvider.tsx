@@ -21,16 +21,19 @@ export const AppProvider = (props: any) => {
 
   useEffect(() => {
     const accessToken = window.localStorage.getItem('access_token');
-    const newUserState = {
-      ...userState,
-      loggedIn: !!accessToken
-    }
-    setUserState(newUserState);
-    if (newUserState.loggedIn) {
-      setIsLoading(false);
-    } else {
-      window.location.assign('/login');
-    }
+    setUserState((state) => {
+      const newUserState = {
+        ...state,
+        loggedIn: !!accessToken
+      }
+      
+      if (newUserState.loggedIn) {
+        setIsLoading(false);
+      } else {
+        window.location.assign('/login');
+      }
+      return newUserState;
+    });
   }, [history.location]);
 
   useEffect(() => {
