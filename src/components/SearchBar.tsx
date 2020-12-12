@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { Navigation } from "../helpers/navigation";
 import { TextField, Button } from "react-md";
-import './SearchBar.scss';
+import "./SearchBar.scss";
 
 export const SearchBar = () => {
   const [inputValue, setInputValue] = useState("");
@@ -14,11 +14,15 @@ export const SearchBar = () => {
 
   return (
     <div className={"search-bar"}>
-      <TextField id='search-input' 
+      <TextField
+        id="search-input"
         value={inputValue}
-        label={'Search for book'}        
-        onChange={(e) => setInputValue(e.target.value)} />
-      <Button themeType={'outline'} onClick={onSearchClick}>Search</Button>      
+        label={"Search for book"}
+        onChange={(e) => setInputValue(e.target.value)}
+      />
+      <Button themeType={"outline"} onClick={onSearchClick}>
+        Search
+      </Button>
     </div>
   );
 };

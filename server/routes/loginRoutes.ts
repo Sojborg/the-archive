@@ -5,5 +5,4 @@ var router = express.Router();
 
 router.post('/', login);
 
-
 export default router;

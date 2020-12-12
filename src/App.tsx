@@ -16,8 +16,15 @@ import { Search } from "./views/search/Search";
 import { SearchProvider } from "./views/SearchProvider";
 import { Login } from "./views/login/Login";
 import { AppProvider } from "./AppProvider";
+import { Button } from "react-md";
+import { LOCAL_STORAGE_ACCESS_TOKEN_KEY } from "./helpers/consts";
 
 function App() {
+  const logOut = () => {
+    window.localStorage.removeItem(LOCAL_STORAGE_ACCESS_TOKEN_KEY);
+    window.location.assign('/login');
+  }
+
   return (
     <div className={"app"}>
       <Router>
@@ -39,6 +46,9 @@ function App() {
                     </li>
                   </ul>
                   <SearchBar />
+                  <Button 
+                    className={'app__logout__button'}
+                    onClick={logOut}>Log out</Button>
                 </nav>
                 <div className={"app__content"}>
                   <Route path={Navigation.books}>

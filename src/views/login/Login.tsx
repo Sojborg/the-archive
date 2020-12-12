@@ -2,24 +2,40 @@ import React, { useState } from "react";
 import { Button, TextField } from "react-md";
 import { useHistory } from "react-router-dom";
 import { postRequest } from "../../helpers/apiService";
+import { LOCAL_STORAGE_ACCESS_TOKEN_KEY } from "../../helpers/consts";
 import { Navigation } from "../../helpers/navigation";
 import "./Login.scss";
 
 export const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [loginError, setLoginError] = useState(false);
   const history = useHistory();
 
   const login = async () => {
-    const response = await postRequest("/login", { username: username, password: password });
-    window.localStorage.setItem('access_token', response.accessToken);
-    history.push(Navigation.home);
+      fetch("/login", { 
+        method: 'post', 
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({username: username, password: password })})
+        .then(async (response) => {
+          if (response.status === 200) {
+            const data = await response.json();
+            window.localStorage.setItem(LOCAL_STORAGE_ACCESS_TOKEN_KEY, data.accessToken);
+            setLoginError(false);
+            history.push(Navigation.home);
+          } else {
+            setLoginError(true);
+          }
+        });
   };
 
   return (
     <div className={"login"}>
-      <div className={"login__container"}>
+      <div className={"login__container"}>        
         <h1>Login</h1>
+        {loginError && <div className={"login__error"}>Wrong username or password.</div>}
         <div className={"login__control"}>
           <TextField
             id="username"
@@ -33,7 +49,7 @@ export const Login = () => {
           <TextField
             id="password"
             label={"password"}
-            type={"text"}
+            type={"password"}
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />

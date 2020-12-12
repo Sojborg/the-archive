@@ -11,7 +11,11 @@
     width: 400px;
     border: 1px solid grey;
     padding: 24px;
-    max-height: 350px;
+  }
+
+  &__error {
+    color:red;
+    margin-bottom: 24px;
   }
 
   &__control {

@@ -1,7 +1,9 @@
+import { LOCAL_STORAGE_ACCESS_TOKEN_KEY } from "./consts";
+
 const headers = () => {
   return {
     'Content-Type': 'application/json',
-    'Authorization': `Bearer: ${window.localStorage.getItem('access_token')}`
+    'Authorization': `Bearer: ${window.localStorage.getItem(LOCAL_STORAGE_ACCESS_TOKEN_KEY)}`
   }
 };
 
@@ -12,7 +14,7 @@ export const postRequest = async <T>(url: string, data: T): Promise<any> => {
       cache: 'no-cache',
       headers: headers(),
       referrerPolicy: 'no-referrer',
-      body: JSON.stringify(data),
+      body: data && JSON.stringify(data),
     });
 
     if (response.status === 401 || response.status === 403) {

@@ -27,9 +27,7 @@ export const signUp = async (request: any, response: any) => {
 }
 
 export const login = async (request: any, response: any) => {
-  console.log('body', request.body)
-
-  // auth user
+  console.log("BODY", request.body)  
   const username = request.body.username;
   const password = request.body.password;
 
@@ -51,7 +49,6 @@ export const login = async (request: any, response: any) => {
   }
 }
 
-
 const generateAccessToken = (user: any) => {
-  return jwt.sign(user, process.env.ACCESS_TOKEN_SECRET!, { expiresIn: '30s' })
+  return jwt.sign(user, process.env.ACCESS_TOKEN_SECRET!, { expiresIn: '10m' })
 }
