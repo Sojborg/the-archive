@@ -6,7 +6,10 @@ interface UserState {
 }
 
 interface IAppContext {
-  user: UserState
+  user: UserState,
+  startLoading(): void;
+  stopLoading(): void;
+  isLoading: boolean;
 }
 
 export const AppContext = createContext({} as IAppContext);
@@ -17,7 +20,7 @@ export const AppProvider = (props: any) => {
       loggedIn: false
     } as UserState
   );
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const accessToken = window.localStorage.getItem('access_token');
@@ -28,7 +31,7 @@ export const AppProvider = (props: any) => {
       }
       
       if (newUserState.loggedIn) {
-        setIsLoading(false);
+        
       } else {
         window.location.assign('/login');
       }
@@ -42,10 +45,13 @@ export const AppProvider = (props: any) => {
 
   return (
     <AppContext.Provider value={{
-        user: userState
+        user: userState,
+        startLoading: () => setIsLoading(true),
+        stopLoading: () => setIsLoading(false),
+        isLoading
       }
     }>
-      {isLoading ? <h1>Loading...</h1> : props.children}
+      {userState.loggedIn && props.children}
     </AppContext.Provider>
   )
 }

@@ -1,12 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Book } from "../../components/Book";
 import { Navigation } from "../../helpers/navigation";
 import './Books.scss';
-import { Button, LinearProgress, Select } from "react-md";
+import { Button, Select } from "react-md";
 import { getBooks, removeBook, saveBook } from "../../helpers/bookservice";
 import { IBook } from '../../common/models/IBooksResponse';
 import { IBooksRequest } from "../../common/models/IBooksRequest";
+import { AppContext } from "../../AppProvider";
 
 interface IBooksListState {
   page: number;
@@ -22,14 +23,15 @@ export const Books = () => {
     sortBy: 'title',
     sorting: 'asc'
   });
-  const [isLoading, setIsLoading] = useState(false);
+  const appContext = useContext(AppContext);
+  const {startLoading, stopLoading} = appContext;
 
   const fetchBooks = async () => {
-    setIsLoading(true);
+    startLoading();
     const response = await getBooks({...bookListState, pageSize: 5} as IBooksRequest);
     setBooks(response.books);
     setNumberOfBooks(response.numberOfBooks);
-    setIsLoading(false);
+    stopLoading();
   }
   
   useEffect(() => {
@@ -37,16 +39,16 @@ export const Books = () => {
   }, [bookListState]);
 
   const onRemoveBook = async (bookId: string) => { 
-    setIsLoading(true);
+    startLoading();
     await removeBook(bookId);
     await fetchBooks();
-    setIsLoading(false);
+    stopLoading();
   }
 
   const onSave = async (book: IBook) => {
-    setIsLoading(true);
+    startLoading();
     saveBook({ ...book });
-    setIsLoading(false);
+    stopLoading();
   };
 
   const updateListState = (key: keyof IBooksListState, value: any) => {
@@ -77,7 +79,6 @@ export const Books = () => {
 
   return (
     <div className={"books"}>
-      {isLoading && <div className={'loading-linear'}><LinearProgress id="simple-linear-progress" /></div>}
       <div className='books__header'>
         <h1>Books</h1>
         <h3>Number of books: {numberOfBooks}</h3>

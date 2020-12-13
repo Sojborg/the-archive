@@ -1,6 +1,9 @@
 .search-bar {
-  display: flex;
-  flex-direction: row;
+
+  &__form {
+    display: flex;
+    flex-direction: row;
+  }
 
   button {
     margin-left: 16px;

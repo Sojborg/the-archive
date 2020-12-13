@@ -27,7 +27,6 @@ export const signUp = async (request: any, response: any) => {
 }
 
 export const login = async (request: any, response: any) => {
-  console.log("BODY", request.body)  
   const username = request.body.username;
   const password = request.body.password;
 

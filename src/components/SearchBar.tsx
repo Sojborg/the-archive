@@ -8,21 +8,23 @@ export const SearchBar = () => {
   const [inputValue, setInputValue] = useState("");
   const history = useHistory();
 
-  const onSearchClick = () => {
+  const onSubmit = () => {
     history.push(`${Navigation.search}/${inputValue}`);
   };
 
   return (
     <div className={"search-bar"}>
-      <TextField
-        id="search-input"
-        value={inputValue}
-        label={"Search for book"}
-        onChange={(e) => setInputValue(e.target.value)}
-      />
-      <Button themeType={"outline"} onClick={onSearchClick}>
-        Search
-      </Button>
+      <form className={"search-bar__form"} onSubmit={onSubmit}>
+        <TextField
+          id="search-input"
+          value={inputValue}
+          label={"Search for book"}
+          onChange={(e) => setInputValue(e.target.value)}
+        />
+        <Button themeType={"outline"} onClick={onSubmit}>
+          Search
+        </Button>
+      </form>
     </div>
   );
 };

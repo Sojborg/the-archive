@@ -1,5 +1,5 @@
 import "./App.scss";
-import React from "react";
+import React, { useContext } from "react";
 import { Books } from "./views/books/Books";
 import {
   BrowserRouter as Router,
@@ -15,15 +15,12 @@ import { SearchBar } from "./components/SearchBar";
 import { Search } from "./views/search/Search";
 import { SearchProvider } from "./views/SearchProvider";
 import { Login } from "./views/login/Login";
-import { AppProvider } from "./AppProvider";
-import { Button } from "react-md";
+import { AppContext, AppProvider } from "./AppProvider";
+import { Button, LinearProgress } from "react-md";
 import { LOCAL_STORAGE_ACCESS_TOKEN_KEY } from "./helpers/consts";
+import { AppHeader } from "./components/AppHeader";
 
 function App() {
-  const logOut = () => {
-    window.localStorage.removeItem(LOCAL_STORAGE_ACCESS_TOKEN_KEY);
-    window.location.assign('/login');
-  }
 
   return (
     <div className={"app"}>
@@ -35,21 +32,7 @@ function App() {
           <AppProvider>
             <SearchProvider>
               <div>
-                <nav className={"app__navigation"}>
-                  <Link to={Navigation.home} className="app__logo" />
-                  <ul>
-                    <li>
-                      <Link to={Navigation.home}>Home</Link>
-                    </li>
-                    <li>
-                      <Link to={Navigation.books}>Books</Link>
-                    </li>
-                  </ul>
-                  <SearchBar />
-                  <Button 
-                    className={'app__logout__button'}
-                    onClick={logOut}>Log out</Button>
-                </nav>
+                <AppHeader />
                 <div className={"app__content"}>
                   <Route path={Navigation.books}>
                     <Books />
