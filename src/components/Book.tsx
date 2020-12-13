@@ -83,12 +83,12 @@ export const Book = (props: IBookProps) => {
           <p>Publisher: {book.publisher}</p>
           <p>Page count: {book.pageCount}</p>
           <p>Product id: {book.productId}</p>
-          <p>
-            Status: <Select id={'test'} 
-                      onChange={(e) => update('status', e)} 
-                      value={book.status ? book.status.toString() : ''} 
-                      options={options} />
-          </p>
+          
+          Status: <Select id={'test'} 
+                    onChange={(e) => update('status', e)} 
+                    value={book.status ? book.status.toString() : ''} 
+                    options={options} />
+          
         </div>
       </div>
       <div className={"book__notes"}>

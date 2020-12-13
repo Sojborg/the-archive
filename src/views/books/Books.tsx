@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useCallback, useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Book } from "../../components/Book";
 import { Navigation } from "../../helpers/navigation";
@@ -26,17 +26,17 @@ export const Books = () => {
   const appContext = useContext(AppContext);
   const {startLoading, stopLoading} = appContext;
 
-  const fetchBooks = async () => {
+  const fetchBooks = useCallback(async () => {
     startLoading();
     const response = await getBooks({...bookListState, pageSize: 5} as IBooksRequest);
     setBooks(response.books);
     setNumberOfBooks(response.numberOfBooks);
     stopLoading();
-  }
+  }, [bookListState]);
   
   useEffect(() => {
     fetchBooks();
-  }, [bookListState]);
+  }, [fetchBooks]);
 
   const onRemoveBook = async (bookId: string) => { 
     startLoading();

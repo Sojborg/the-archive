@@ -22,7 +22,7 @@ export const useFetch = <T, >(url: string, options: any = null) => {
       }
     };
     fetchData();
-  }, [url, options]);
+  }, [url, options, appContext]);
   return {
     response,
     isFetchingData,
