@@ -26,28 +26,26 @@ function App() {
             <Login />
           </Route>
           <AppProvider>
-            <SearchProvider>
-              <div>
-                <AppHeader />
-                <div className={"app__content"}>
-                  <Route path={Navigation.books}>
-                    <Books />
-                  </Route>
-                  <Route path={Navigation.newbook}>
-                    <CreateBook />
-                  </Route>
-                  <Route
-                    path={`${Navigation.search}/:query`}
-                    render={(props: RouteComponentProps<any>) => {
-                      return <Search query={props.match.params.query} />;
-                    }}
-                  ></Route>
-                  <Route path={Navigation.home}>
-                    <Dashboard />
-                  </Route>
-                </div>
+            <div>
+              <AppHeader />
+              <div className={"app__content"}>
+                <Route path={Navigation.books}>
+                  <Books />
+                </Route>
+                <Route path={Navigation.newbook}>
+                  <CreateBook />
+                </Route>
+                <Route
+                  path={`${Navigation.search}/:query`}
+                  render={(props: RouteComponentProps<any>) => {
+                    return <Search query={props.match.params.query} />;
+                  }}
+                ></Route>
+                <Route path={Navigation.home}>
+                  <Dashboard />
+                </Route>
               </div>
-            </SearchProvider>
+            </div>
           </AppProvider>
         </Switch>
       </Router>

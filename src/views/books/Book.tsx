@@ -1,18 +1,16 @@
 import React, { useEffect, useState } from "react";
-import { addBookList } from "../helpers/bookservice";
 import "./Book.scss";
-import { TextEditor } from "./TextEditor";
-import {Button} from 'react-md';
-import {Select} from '@react-md/form';
-import { IBook, BookStatus } from "../common/models/IBooksResponse";
+import { TextEditor } from "../../components/TextEditor";
+import { Button, MenuItem, Select } from "@material-ui/core";
+import { IBook, BookStatus } from "../../common/models/IBooksResponse";
 
 interface IBookProps {
   book: IBook;
   onSaveBook?(book: IBook): void;
-  onDeleteBook?(bookId: string): void; 
+  onDeleteBook?(bookId: string): void;
 }
 
-interface IDisplayState { 
+interface IDisplayState {
   notes: boolean;
 }
 
@@ -21,16 +19,13 @@ export const Book = (props: IBookProps) => {
   const [displayState, setDisplayState] = useState({
     notes: false,
   } as IDisplayState);
+  const { onSaveBook } = props;
 
   useEffect(() => {
     if (book) {
       setBook(book);
     }
   }, [book]);
-
-  const onAddToListClick = () => {
-    addBookList(book);
-  };
 
   const toggleNotes = (toggleName: keyof IDisplayState) => {
     setDisplayState({
@@ -42,35 +37,34 @@ export const Book = (props: IBookProps) => {
   const update = (propertyName: keyof IBook, value: any) => {
     setBook({
       ...book,
-      [propertyName]: value
-    })
-  }
+      [propertyName]: value,
+    });
+  };
 
-  const options = ([
+  const options = [
     {
-      label: 'To read',
-      value: BookStatus.ToRead
+      label: "To read",
+      value: BookStatus.ToRead,
     },
     {
-      label: 'Reading',
-      value: BookStatus.Reading
+      label: "Reading",
+      value: BookStatus.Reading,
     },
     {
-      label: 'Done',
-      value: BookStatus.Done
+      label: "Done",
+      value: BookStatus.Done,
     },
-  ]
-
-  )
+  ];
 
   return (
     <li key={book.id} className={"book"}>
       <div className={"book__content"}>
         <div className={"book__actions"}>
-          <Button themeType={"outline"} className={"book__actions__add"} onClick={onAddToListClick}>
-            Add to list
-          </Button>
-          <Button themeType={"outline"} className={"book__actions__remove"} onClick={() => props.onDeleteBook && props.onDeleteBook(book.id)}>
+          <Button
+            variant={'outlined'}
+            className={"book__actions__remove"}
+            onClick={() => props.onDeleteBook && props.onDeleteBook(book.id)}
+          >
             Remove
           </Button>
         </div>
@@ -83,12 +77,14 @@ export const Book = (props: IBookProps) => {
           <p>Publisher: {book.publisher}</p>
           <p>Page count: {book.pageCount}</p>
           <p>Product id: {book.productId}</p>
-          
-          Status: <Select id={'test'} 
-                    onChange={(e) => update('status', e)} 
-                    value={book.status ? book.status.toString() : ''} 
-                    options={options} />
-          
+          Status:{" "}
+          <Select
+            id={"test"}
+            onChange={(e) => update("status", e)}
+            value={book.status ? book.status.toString() : ""}            
+          >
+            {options.map(x => <MenuItem value={x.value}>{x.label}</MenuItem>)}            
+          </Select>
         </div>
       </div>
       <div className={"book__notes"}>
@@ -98,14 +94,19 @@ export const Book = (props: IBookProps) => {
             <TextEditor
               value={book.notes || ""}
               onChange={(newContent) => {
-                console.log(newContent)
-                update('notes', newContent)}
-              }
+                console.log(newContent);
+                update("notes", newContent);
+              }}
             />
           </div>
         )}
       </div>
-      <Button themeType={"outline"} onClick={() => props.onSaveBook && props.onSaveBook(book)}>Save changes</Button>
+      <Button
+        variant={'outlined'}
+        onClick={() => onSaveBook && onSaveBook(book)}
+      >
+        Save changes
+      </Button>
     </li>
   );
 };

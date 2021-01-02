@@ -1,4 +1,4 @@
-import React, { createContext, useEffect, useState } from 'react';
+import React, { createContext, useCallback, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 
 interface UserState {
@@ -41,13 +41,16 @@ export const AppProvider = (props: any) => {
 
   useEffect(() => {
     
-  }, [userState.loggedIn])
+  }, [userState.loggedIn]);
+
+  const startLoading = useCallback(() => setIsLoading(true), []);
+  const stopLoading = useCallback(() => setIsLoading(false), []);
 
   return (
     <AppContext.Provider value={{
         user: userState,
-        startLoading: () => setIsLoading(true),
-        stopLoading: () => setIsLoading(false),
+        startLoading,
+        stopLoading,
         isLoading
       }
     }>

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { Navigation } from "../helpers/navigation";
-import { TextField, Button } from "react-md";
+import { TextField, Button } from "@material-ui/core";
 import "./SearchBar.scss";
 
 export const SearchBar = () => {
@@ -21,7 +21,7 @@ export const SearchBar = () => {
           label={"Search for book"}
           onChange={(e) => setInputValue(e.target.value)}
         />
-        <Button themeType={"outline"} onClick={onSubmit}>
+        <Button variant={'outlined'} onClick={onSubmit}>
           Search
         </Button>
       </form>

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, TextField } from "react-md";
+import { Button, TextField } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
 import { LOCAL_STORAGE_ACCESS_TOKEN_KEY } from "../../helpers/consts";
 import { Navigation } from "../../helpers/navigation";
@@ -62,9 +62,9 @@ export const Login = () => {
           </div>
           <div className={"login__control login__control__button"}>
             <Button
-              themeType={"contained"}
+              variant={'outlined'}
               type={'submit'}
-              theme="primary"
+              color="primary"
               disabled={username === "" || password === ""}
               onClick={login}
             >

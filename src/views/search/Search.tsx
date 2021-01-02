@@ -16,19 +16,12 @@ export enum SearchViewMode {
 }
 
 export const Search = (props: ISearchBarProps) => {
-  const [query, setQuery] = useState("");
   const [viewMode, setViewMode] = useState(SearchViewMode.small);
   const [addingItem, setAddingItem] = useState<string | undefined>(undefined);
   const [numberOfBooks, setNumberOfBooks] = useState<number | undefined>(
     undefined
   );
-  const response = useFetch<any>(`/books/searchbook?q=${query}`);
-
-  useEffect(() => {
-    if (props.query) {
-      setQuery(props.query);
-    }
-  }, [props.query]);
+  const response = useFetch<any>(`/books/searchbook?q=${props.query}`);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -107,7 +100,6 @@ export const Search = (props: ISearchBarProps) => {
                   onAddBook={handleOnAddBook}
                   viewMode={viewMode}
                 />
-                ;
               </>
             );
           })}
