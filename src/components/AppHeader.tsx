@@ -5,6 +5,7 @@ import { AppContext } from "../AppProvider";
 import { LOCAL_STORAGE_ACCESS_TOKEN_KEY } from "../helpers/consts";
 import { Navigation } from "../helpers/navigation";
 import { SearchBar } from "./SearchBar";
+import MenuIcon from '@material-ui/icons/Menu';
 
 export const AppHeader = () => {
   const appContext = useContext(AppContext);
@@ -17,6 +18,7 @@ export const AppHeader = () => {
   return (
     <>
       <nav className={"app__navigation"}>
+        <MenuIcon className={'app__navigation__icon'} />
         <Link to={Navigation.home} className="app__logo" />
         <ul>
           <li>

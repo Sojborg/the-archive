@@ -1,16 +1,14 @@
-@import "~react-md/dist/react-md";
-
-@include react-md-utils;
+@import "./styles/shared.scss";
 
 .app {
   &__logo {
     width: 75px;
     height: 75px;
-    background-image: url('./graphics/books_icon.png');
+    background-image: url("./graphics/books_icon.png");
     background-size: 75px;
     background-repeat: no-repeat;
     margin-right: 32px;
-  }  
+  }
 
   &__logout__button {
     margin-left: 16px;
@@ -24,33 +22,43 @@
     padding: 8px 40px;
     margin-bottom: 32px;
 
-    ul {
-      padding: 0;
-      flex: 1;
-      display: flex;
-      flex-direction: row;
-      list-style-type: none;
+    &__icon {
+      font-size: 50px;
 
-      li {
-        margin-right: 40px;
-        color: black;
-        
-        a {
-          font-weight: bold;
-          font-size: 1.125rem;
-          text-decoration: none;
-        }
+      @include bp-above($md) {
+        display: none;
+      }
+    }
 
-        a:visited {
+    @media (min-width: 600px) {
+      ul {
+        padding: 0;
+        flex: 1;
+        display: flex;
+        flex-direction: row;
+        list-style-type: none;
+
+        li {
+          margin-right: 40px;
           color: black;
-        }
 
-        a:hover {
-          text-decoration: underline;
+          a {
+            font-weight: bold;
+            font-size: 1.125rem;
+            text-decoration: none;
+          }
+
+          a:visited {
+            color: black;
+          }
+
+          a:hover {
+            text-decoration: underline;
+          }
         }
       }
     }
-  }
+  }  
 
   &__content {
     max-width: 980px;
