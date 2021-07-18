@@ -80,7 +80,7 @@ export const Book = (props: IBookProps) => {
           Status:{" "}
           <Select
             id={"test"}
-            onChange={(e) => update("status", e)}
+            onChange={(e) => update("status", e.target.value)}
             value={book.status ? book.status.toString() : ""}            
           >
             {options.map(x => <MenuItem value={x.value}>{x.label}</MenuItem>)}            

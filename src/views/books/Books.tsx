@@ -111,7 +111,7 @@ export const Books = () => {
           id={"sortBySelect"}
           label={"Sort by"}
           className={"books__actions__sorting"}
-          onChange={(value) => updateListState("sortBy", value)}
+          onChange={(e) => updateListState("sortBy", e.target.value)}
           value={bookListState.sortBy}
         >
           {sortByOptions.map((x) => (
@@ -122,7 +122,7 @@ export const Books = () => {
           id={"sortingSelect"}
           label={"Sort"}
           className={"books__actions__sorting"}
-          onChange={(value) => updateListState("sorting", value)}
+          onChange={(e) => updateListState("sorting", e.target.value)}
           value={bookListState.sorting}
         >
           {sortingOptions.map((x) => (
