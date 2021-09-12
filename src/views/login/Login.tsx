@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, TextField } from "@material-ui/core";
+import { Button, TextField, Typography } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
 import { LOCAL_STORAGE_ACCESS_TOKEN_KEY } from "../../helpers/consts";
 import { Navigation } from "../../helpers/navigation";
@@ -36,8 +36,12 @@ export const Login = () => {
 
   return (
     <div className={"login"}>
-      <div className={"login__container"}>
-        <h1>Login</h1>
+      <div className={'login__header'}>
+        <div className="app__logo" />
+        <Typography variant={'h3'}>The Archive</Typography>
+      </div>
+      <div className={'login__container'}>
+      <div className={"login__form"}>
         <form onSubmit={login}>
           {loginError && (
             <div className={"login__error"}>Wrong username or password.</div>
@@ -72,6 +76,7 @@ export const Login = () => {
             </Button>
           </div>
         </form>
+      </div>
       </div>
     </div>
   );
