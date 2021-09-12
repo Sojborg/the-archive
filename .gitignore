@@ -22,7 +22,13 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
+# javascript
 *.js
+*.js.map
 
+# config files
 server/repository/config.ts
 server/config.ts
+
+# idea
+/.idea
