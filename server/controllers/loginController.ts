@@ -2,6 +2,7 @@ require("dotenv").config();
 import jwt, { VerifyErrors } from "jsonwebtoken";
 import * as argon2 from 'argon2';
 import { repository } from "../repository/repository";
+import { userRepository } from "../repository/UserRepository";
 
 export interface IUser {
   username: string;
@@ -21,7 +22,7 @@ export const signUp = async (request: any, response: any) => {
     password: passwordHashed
   }
 
-  repository.replaceDocument('Users', user);
+  await userRepository.createDocument(user);
 
   response.json({username})
 }
