@@ -1,4 +1,5 @@
 import { config } from '../config';
+import { bookRepository } from '../repository/BookRepository';
 import {repository} from '../repository/repository';
 
 const createBooksTable = () => {
@@ -6,7 +7,7 @@ const createBooksTable = () => {
         .then(() => repository.getCollection())
         .then(() => {
             config.documents.forEach(book => {
-                repository.getDocument(book)
+                bookRepository.getDocument(book)
             });
         })
         .then(() => { repository.exit(`Completed successfully`); })

@@ -22,7 +22,7 @@ export const SearchBook = (props: IBookProps) => {
   };
 
   return (
-    <li
+    <div
       key={book.id}
       className={`search-book search-book-${SearchViewMode[viewMode]}`}
     >
@@ -46,7 +46,7 @@ export const SearchBook = (props: IBookProps) => {
           className={`search-book__description search-book__description-${SearchViewMode[viewMode]}`}
         >
           <h4>{book.title}</h4>
-          <p>{book.synopsis}</p>
+          <p className={`search-book__description search-book__synopsis-${SearchViewMode[viewMode]}`}>{book.synopsis}</p>
         </div>
         <div
           className={`search-book__info search-book__info-${SearchViewMode[viewMode]}`}
@@ -56,6 +56,6 @@ export const SearchBook = (props: IBookProps) => {
           <p>Product id: {book.productId}</p>
         </div>
       </div>
-    </li>
+    </div>
   );
 };

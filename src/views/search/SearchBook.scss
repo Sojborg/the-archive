@@ -28,8 +28,10 @@
     padding-bottom: 16px;
     padding-top: 24px;
 
-    img {
-      height: 200px;
+    &-large {
+      img {
+        height: 200px;
+      }
     }
   
     &-small {
@@ -37,7 +39,7 @@
       padding-top: 8px;
 
       img {
-        height: 75px;
+        width: 100px;
       }
 
     }
@@ -77,6 +79,13 @@
 
       p {
         max-height: 45px;
+      }
+    }
+
+    &__synopsis {
+
+      &-small {
+        display: none;  
       }
     }
   }

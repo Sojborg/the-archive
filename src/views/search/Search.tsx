@@ -42,7 +42,7 @@ export const Search = (props: ISearchBarProps) => {
     setNumberOfBooks(response.numberOfBooks);
   };
 
-  const viewClass = `search__list-${viewMode}`;
+  const viewClass = `search__list-${SearchViewMode[viewMode]}`;
 
   return (
     <div className={"search"}>
@@ -73,7 +73,7 @@ export const Search = (props: ISearchBarProps) => {
         </div>
       </div>
       {!response.error && response.response && response.response.items && (
-        <ul className={viewClass}>
+        <div className={viewClass}>
           {response.response.items.map((apiBook: any) => {
             const { volumeInfo } = apiBook;
             const book = {
@@ -103,7 +103,7 @@ export const Search = (props: ISearchBarProps) => {
               </>
             );
           })}
-        </ul>
+        </div>
       )}
       <div className={"search__books-summary"}>
         <div className={"search__books-summary__content"}>

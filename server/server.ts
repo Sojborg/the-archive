@@ -34,6 +34,15 @@ const authenticateToken = (request: any, response: any, next: any) => {
   })
 }
 
+app.use(function(err: any, req: any, res: any, next: any) {
+  // handle your errors
+  if (err) {
+    console.log('ERROR: ', err);
+  }
+
+  console.log('REQUEST: ', req);
+});
+
 app.use('/books', authenticateToken, bookRouter);
 app.use('/login', loginRouter);
 

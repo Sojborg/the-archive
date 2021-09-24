@@ -31,7 +31,7 @@ export const login = async (request: any, response: any) => {
   const username = request.body.username;
   const password = request.body.password;
 
-  const user = await repository.getUserByUsername(username);
+  const user = await userRepository.getUserByUsername(username);
 
   if (!user) {
     return response.sendStatus(401);

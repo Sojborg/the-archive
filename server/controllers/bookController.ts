@@ -2,6 +2,7 @@ import { repository } from "../repository/repository";
 import { googleBooksService } from "../services/google-books-service";
 import { IBooksResponse } from '../../src/common/models/IBooksResponse';
 import { IBooksRequest } from "../../src/common/models/IBooksRequest";
+import { bookRepository } from "../repository/BookRepository";
 
 export const books = async (req: any, res: any) => {
   try {
@@ -12,8 +13,8 @@ export const books = async (req: any, res: any) => {
       pageSize: req.body.pageSize < 1 ? 1 : req.body.pageSize
     } as IBooksRequest;
 
-    const books = await repository.queryCollection(request);
-    const numberOfBooks = await repository.countCollection();
+    const books = await bookRepository.queryCollection(request);
+    const numberOfBooks = await bookRepository.countCollection();
 
     const response = {
       books,
@@ -29,7 +30,7 @@ export const books = async (req: any, res: any) => {
 export const numberofbooks = async (req: any, res: any) => {
   try {
     res.setHeader("Content-Type", "application/json");
-    const count = await repository.countCollection();
+    const count = await bookRepository.countCollection();
     const payload = {numberOfBooks: count};
     res.send(JSON.stringify(payload));
   } catch (e) {
@@ -40,8 +41,8 @@ export const numberofbooks = async (req: any, res: any) => {
 export const addbooktolist = async (req: any, res: any) => {
   try {
     console.log(req.body);
-    await repository.getDocument(req.body);
-    const numberOfBooksCount = await repository.countCollection();
+    await bookRepository.getDocument(req.body);
+    const numberOfBooksCount = await bookRepository.countCollection();
     const payload = {numberOfBooks: numberOfBooksCount};
     res.send(JSON.stringify(payload));
   } catch (e) {
@@ -52,7 +53,7 @@ export const addbooktolist = async (req: any, res: any) => {
 export const savebook = async (req: any, res: any) => {
   try {
     console.log(req.body);
-    repository.replaceDocument('Books', req.body);
+    bookRepository.replaceDocument(req.body);
     res.sendStatus(200);
   } catch (e) {
     console.error(e);
@@ -64,7 +65,7 @@ export const removebook = async (req: any, res: any) => {
     console.log('BODY', req.body);
     const data = req.body
     console.log(data);
-    repository.deleteFamilyDocument(data.id);
+    bookRepository.deleteDocument(data.id);
     res.sendStatus(200);
   } catch (e) {
     console.error(e);

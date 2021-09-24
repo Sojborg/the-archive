@@ -1,56 +1,29 @@
-import { DocumentClient } from "documentdb";
-import { config } from "../config";
+import { IUser } from "../controllers/loginController";
+import { BaseRepository } from "./BaseRepositoty";
 
-class UserRepositoty {
+class UserRepository extends BaseRepository<any> {
+    
 
-    client = new DocumentClient(config.endpoint, {
-        masterKey: config.primaryKey,
-    });
-
-    HttpStatusCodes = { NOTFOUND: 404 };
-    databaseUrl = `dbs/${config.database.id}`;
-    collectionUrl = `${this.databaseUrl}/colls/Users`;
-
-
-    getDocument(document: any) {
-        let documentUrl = `${this.collectionUrl}/docs/${document.id}`;
-        console.log(`Getting document:\n${document.id}\n`);
-
-        return new Promise((resolve, reject) => {
-            this.client.readDocument(documentUrl, (err, result) => {
-                if (err) {
-                    if (err.code == this.HttpStatusCodes.NOTFOUND) {
-
-                    } else {
-                        reject(err);
-                    }
-                } else {
-                    resolve(result);
-                }
-            });
-        });
+  getUserByUsername(username: string): Promise<IUser | null> {
+    try {
+      return new Promise((resolve, reject) => {
+        this.client
+          .queryDocuments<IUser>(
+            `${this.databaseUrl}/colls/${this.collection}`,
+            `SELECT * FROM Users WHERE Users.username = "${username}"`
+          )
+          .toArray((err, results) => {
+            if (err) reject(err);
+            else {
+              resolve(results.length > 0 ? results[0] : null);
+            }
+          });
+      });
+    } catch (e) {
+      console.error('getUserByUsername', e);
+      throw e;
     }
-
-    createDocument(document: any) {
-        console.log("Creating document: ", document);
-        return new Promise((resolve, reject) => {
-            this.client.createDocument(
-                this.collectionUrl,
-                document,
-                (err, created) => {
-                    console.log("DONE", err, created);
-                    if (err) {
-                        console.error('Creating document failed', err);
-                        reject(err);
-                    }
-                    else {
-                        resolve(created);
-                    }
-                }
-            )
-        }
-        );
-    }
+  }
 }
 
-export const userRepository = new UserRepositoty();
+export const userRepository = new UserRepository('Users');
