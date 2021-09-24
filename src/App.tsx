@@ -15,11 +15,19 @@ import { SearchProvider } from "./views/SearchProvider";
 import { Login } from "./views/login/Login";
 import { AppProvider } from "./AppProvider";
 import { AppHeader } from "./components/AppHeader";
+import { QueryClient, QueryClientProvider } from "react-query";
 
 function App() {
 
   return (
     <div className={"app"}>
+      <QueryClientProvider client={new QueryClient({
+        defaultOptions: {
+          queries: {
+            refetchOnWindowFocus: false
+          }
+        }
+      })}>
       <Router>
         <Switch>
           <Route exact path={Navigation.login}>
@@ -49,6 +57,7 @@ function App() {
           </AppProvider>
         </Switch>
       </Router>
+      </QueryClientProvider>
     </div>
   );
 }

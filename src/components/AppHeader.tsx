@@ -6,9 +6,11 @@ import { LOCAL_STORAGE_ACCESS_TOKEN_KEY } from "../helpers/consts";
 import { Navigation } from "../helpers/navigation";
 import { SearchBar } from "./SearchBar";
 import MenuIcon from '@material-ui/icons/Menu';
+import { useIsFetching } from "react-query";
 
 export const AppHeader = () => {
   const appContext = useContext(AppContext);
+  const isFetching = useIsFetching();
 
   const logOut = () => {
     window.localStorage.removeItem(LOCAL_STORAGE_ACCESS_TOKEN_KEY);
@@ -33,7 +35,7 @@ export const AppHeader = () => {
           Log out
         </Button>
       </nav>
-      {appContext.isLoading && (
+      {(isFetching || appContext.isLoading) && (
         <div className={"loading-linear"}>
           <LinearProgress id="simple-linear-progress" />
         </div>

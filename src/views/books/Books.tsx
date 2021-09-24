@@ -8,15 +8,16 @@ import { getBooks, removeBook, saveBook } from "../../helpers/bookservice";
 import { IBook } from "../../common/models/IBooksResponse";
 import { IBooksRequest } from "../../common/models/IBooksRequest";
 import { AppContext } from "../../AppProvider";
+import {useBooks} from '../../hooks/useBooks';
 
 interface IBooksListState {
   page: number;
   sortBy: string;
   sorting: string;
+  pageSize: 5;
 }
 
 export const Books = () => {
-  const [books, setBooks] = useState<IBook[] | undefined>(undefined);
   const [numberOfBooks, setNumberOfBooks] = useState<number | undefined>(
     undefined
   );
@@ -24,29 +25,16 @@ export const Books = () => {
     page: 1,
     sortBy: "title",
     sorting: "asc",
+    pageSize: 5
   });
   const appContext = useContext(AppContext);
   const { startLoading, stopLoading } = appContext;
-
-  const fetchBooks = useCallback(async () => {
-    startLoading();
-    const response = await getBooks({
-      ...bookListState,
-      pageSize: 5,
-    } as IBooksRequest);
-    setBooks(response.books);
-    setNumberOfBooks(response.numberOfBooks);
-    stopLoading();
-  }, [bookListState, startLoading, stopLoading]);
-
-  useEffect(() => {
-    fetchBooks();
-  }, [fetchBooks]);
+  const {data} = useBooks(bookListState);
 
   const onRemoveBook = async (bookId: string) => {
     startLoading();
     await removeBook(bookId);
-    await fetchBooks();
+    // await fetchBooks();
     stopLoading();
   };
 
@@ -134,8 +122,8 @@ export const Books = () => {
         </Button>
       </div>
       <ul className={"books__list"}>
-        {books &&
-          books.map((book: IBook) => (
+        {data &&
+          data.books.map((book: IBook) => (
             <Book
               key={book.id}
               book={book}
