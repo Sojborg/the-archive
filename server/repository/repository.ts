@@ -116,13 +116,3 @@ class Repository {
 }
 
 export const repository = new Repository();
-
-// getDatabase()
-//     .then(() => getCollection())
-//     .then(() => getFamilyDocument(config.documents["Elon Musk"]))
-//     .then(() => getFamilyDocument(config.documents["Seven Habits of Highly Effective People"]))
-//     .then(() => queryCollection())
-//     // .then(() => deleteFamilyDocument(config.documents.Andersen))
-//     // .then(() => cleanup())
-//     .then(() => { exit(`Completed successfully`); })
-//     .catch((error) => { exit(`Completed with error ${JSON.stringify(error)}`) });

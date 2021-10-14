@@ -1,13 +1,12 @@
-import React, { useCallback, useContext, useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import { Book } from "./Book";
-import { Navigation } from "../../helpers/navigation";
+import React, {useContext, useState} from "react";
+import {Link} from "react-router-dom";
+import {Book} from "./Book";
+import {Navigation} from "../../helpers/navigation";
 import "./Books.scss";
-import { Button, MenuItem, Select } from "@material-ui/core";
-import { getBooks, removeBook, saveBook } from "../../helpers/bookservice";
-import { IBook } from "../../common/models/IBooksResponse";
-import { IBooksRequest } from "../../common/models/IBooksRequest";
-import { AppContext } from "../../AppProvider";
+import {Button, MenuItem, Select} from "@material-ui/core";
+import {removeBook, saveBook} from "../../helpers/bookservice";
+import {IBook} from "../../common/models/IBooksResponse";
+import {AppContext} from "../../AppProvider";
 import {useBooks} from '../../hooks/useBooks';
 
 interface IBooksListState {
@@ -18,9 +17,6 @@ interface IBooksListState {
 }
 
 export const Books = () => {
-  const [numberOfBooks, setNumberOfBooks] = useState<number | undefined>(
-    undefined
-  );
   const [bookListState, setBookListState] = useState<IBooksListState>({
     page: 1,
     sortBy: "title",
@@ -74,7 +70,7 @@ export const Books = () => {
     <div className={"books"}>
       <div className="books__header">
         <h1>Books</h1>
-        <h3>Number of books: {numberOfBooks}</h3>
+        <h3>Number of books: {data?.numberOfBooks}</h3>
       </div>
       <div className={"books__actions"}>
         <Button

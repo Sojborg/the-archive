@@ -1,21 +1,15 @@
 import "./App.scss";
 import React from "react";
-import { Books } from "./views/books/Books";
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  RouteComponentProps,
-} from "react-router-dom";
-import { Dashboard } from "./views/dashboard/Dashboard";
-import { CreateBook } from "./views/books/CreateBook";
-import { Navigation } from "./helpers/navigation";
-import { Search } from "./views/search/Search";
-import { SearchProvider } from "./views/SearchProvider";
-import { Login } from "./views/login/Login";
-import { AppProvider } from "./AppProvider";
-import { AppHeader } from "./components/AppHeader";
-import { QueryClient, QueryClientProvider } from "react-query";
+import {Books} from "./views/books/Books";
+import {BrowserRouter as Router, Route, RouteComponentProps, Switch,} from "react-router-dom";
+import {Dashboard} from "./views/dashboard/Dashboard";
+import {CreateBook} from "./views/books/CreateBook";
+import {Navigation} from "./helpers/navigation";
+import {Search} from "./views/search/Search";
+import {Login} from "./views/login/Login";
+import {AppProvider} from "./AppProvider";
+import {AppHeader} from "./components/AppHeader";
+import {QueryClient, QueryClientProvider} from "react-query";
 
 function App() {
 
