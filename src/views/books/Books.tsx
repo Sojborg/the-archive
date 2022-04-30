@@ -36,7 +36,7 @@ export const Books = () => {
 
   const onSave = async (book: IBook) => {
     startLoading();
-    saveBook({ ...book });
+    await saveBook({ ...book });
     stopLoading();
   };
 
