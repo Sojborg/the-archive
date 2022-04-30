@@ -4,7 +4,7 @@ import { BaseRepository } from "./BaseRepositoty";
 class BookRepository extends BaseRepository<any> {
 
 
-    queryCollection(booksRequest: IBooksRequest) {
+    queryCollection(booksRequest: IBooksRequest, userId: string) {
         const { page, pageSize, sortBy, sorting } = booksRequest;
 
         return new Promise((resolve, reject) => {
@@ -12,6 +12,7 @@ class BookRepository extends BaseRepository<any> {
             .queryDocuments(
                 this.collectionUrl,
                 `SELECT * FROM b
+                WHERE b.userId = "${userId}"
                 ORDER BY b.${sortBy} ${sorting}
                 OFFSET ${(page - 1) * pageSize} LIMIT ${pageSize}`
             )

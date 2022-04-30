@@ -1,4 +1,4 @@
 POST http://localhost:5000/login/signup
 content-type: application/json
 
-{"username": "hans", "password": "test"}
+{"username": "jesper", "password": "test"}

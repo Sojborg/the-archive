@@ -13,7 +13,7 @@ export const books = async (req: any, res: any) => {
       pageSize: req.body.pageSize < 1 ? 1 : req.body.pageSize
     } as IBooksRequest;
 
-    const books = await bookRepository.queryCollection(request);
+    const books = await bookRepository.queryCollection(request, req.user.id);
     const numberOfBooks = await bookRepository.countCollection();
 
     const response = {
@@ -41,7 +41,11 @@ export const numberofbooks = async (req: any, res: any) => {
 export const addbooktolist = async (req: any, res: any) => {
   try {
     console.log(req.body);
-    await bookRepository.getDocument(req.body);
+    const book = {
+      ...req.body,
+      userId: req.user.id
+    }
+    await bookRepository.createDocument(book);
     const numberOfBooksCount = await bookRepository.countCollection();
     const payload = {numberOfBooks: numberOfBooksCount};
     res.send(JSON.stringify(payload));
@@ -53,7 +57,11 @@ export const addbooktolist = async (req: any, res: any) => {
 export const savebook = async (req: any, res: any) => {
   try {
     console.log(req.body);
-    bookRepository.replaceDocument(req.body);
+    const book = {
+      ...req.body,
+      userId: req.user.id
+    }
+    bookRepository.replaceDocument(book);
     res.sendStatus(200);
   } catch (e) {
     console.error(e);

@@ -37,8 +37,7 @@ export const Search = (props: ISearchBarProps) => {
 
   const handleOnAddBook = async (book: IBook) => {
     setAddingItem(book.id);
-    await addBookList(book);
-    const response = await getNumberOfBooks();
+    const response = await addBookList(book);
     setNumberOfBooks(response.numberOfBooks);
   };
 

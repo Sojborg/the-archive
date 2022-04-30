@@ -43,7 +43,7 @@ function App() {
                     return <Search query={props.match.params.query} />;
                   }}
                 ></Route>
-                <Route path={Navigation.home}>
+                <Route exact={true} path={Navigation.home}>
                   <Dashboard />
                 </Route>
               </div>
