@@ -2,7 +2,12 @@
   border: 1px solid #b4b4b4;
   border-radius: 4px;
   margin-bottom: 32px;
-  padding: 32px;
+  padding: 16px;
+  
+  h4 {
+    margin-top: 0px;
+    margin-bottom: 8px;
+  }
 
   &-small {
     margin-bottom: 8px;
@@ -30,13 +35,14 @@
 
     &-large {
       img {
-        height: 200px;
+        min-width: 130px;
       }
     }
   
     &-small {
       padding-bottom: 8px;
       padding-top: 8px;
+      min-height: 160px;
 
       img {
         width: 100px;
@@ -48,7 +54,7 @@
   &__actions {
     position: absolute;
     top: -24px;
-    right: -24px;
+    right: 0;
 
     &-small {
       top: auto;      
@@ -63,12 +69,12 @@
 
   &__description {
     flex: 2;
-    margin: 0 32px;
+    margin: 0 12px;
+    overflow: hidden;
 
     p {
-      overflow: hidden;
       text-overflow: ellipsis;
-      max-height: 150px;
+      max-height: 190px;
     }
 
     h4 {
@@ -78,14 +84,14 @@
     &-small {
 
       p {
-        max-height: 45px;
+        max-height: 150px;
       }
     }
 
     &__synopsis {
 
       &-small {
-        display: none;  
+        display: none;
       }
     }
   }
