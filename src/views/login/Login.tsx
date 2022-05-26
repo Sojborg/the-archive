@@ -52,6 +52,8 @@ export const Login = () => {
               id="username"
               label={"Username"}
               type={"text"}
+              fullWidth={true}
+              variant={'outlined'}
               value={username}
               onChange={(e) => setUsername(e.target.value)}
             />
@@ -61,15 +63,18 @@ export const Login = () => {
               id="password"
               label={"password"}
               type={"password"}
+              variant={'outlined'}
+              fullWidth={true}
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
           </div>
           <div className={"login__control login__control__button"}>
             <Button
-              variant={'outlined'}
+              variant={'contained'}
               type={'submit'}
               color="primary"
+              fullWidth={true}
               disabled={username === "" || password === ""}
               onClick={login}
             >

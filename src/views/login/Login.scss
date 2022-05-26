@@ -22,6 +22,10 @@
     justify-content: center;
     align-items: center;
     flex-direction: column;
+
+    h4 {
+      margin-bottom: 16px;
+    }
   }
 
   &__form {
@@ -40,9 +44,13 @@
     margin-bottom: 24px;
 
     &__button {
-      align-self: flex-end;
+      align-items: flex-end;
       display: flex;
-      justify-content: space-between;
+      flex-direction: column;
+      
+      a {
+        margin-top: 16px;
+      }
     }
   }
 }
