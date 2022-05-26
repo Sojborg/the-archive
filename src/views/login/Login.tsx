@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { Button, TextField, Typography } from "@material-ui/core";
-import { useHistory } from "react-router-dom";
+import {Button, TextField, Typography} from "@material-ui/core";
+import { useHistory, Link } from "react-router-dom";
 import { LOCAL_STORAGE_ACCESS_TOKEN_KEY } from "../../helpers/consts";
 import { Navigation } from "../../helpers/navigation";
 import "./Login.scss";
@@ -41,6 +41,7 @@ export const Login = () => {
         <Typography variant={'h3'}>The Archive</Typography>
       </div>
       <div className={'login__container'}>
+      <Typography variant={'h4'}>Login</Typography>
       <div className={"login__form"}>
         <form onSubmit={login}>
           {loginError && (
@@ -74,6 +75,7 @@ export const Login = () => {
             >
               Login
             </Button>
+            <Link to={Navigation.signup}>New user? Go sign up!</Link>
           </div>
         </form>
       </div>

@@ -10,6 +10,7 @@ import {Login} from "./views/login/Login";
 import {AppProvider} from "./AppProvider";
 import {AppHeader} from "./components/AppHeader";
 import {QueryClient, QueryClientProvider} from "react-query";
+import {Signup} from "./views/signup/Signup";
 
 function App() {
 
@@ -26,6 +27,9 @@ function App() {
         <Switch>
           <Route exact path={Navigation.login}>
             <Login />
+          </Route>
+          <Route path={Navigation.signup}>
+            <Signup />
           </Route>
           <AppProvider>
             <div>
