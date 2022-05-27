@@ -11,14 +11,11 @@ export const useFetch = <T, >(url: string, options: any = null) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // appContext.startLoading();
         setIsFetchingData(true);
         const response = await getRequest(url);
         setResponse(response);
-      } catch (e) {
+      } catch (e: any) {
         setError(e);
-      } finally {
-        // appContext.stopLoading();
       }
     };
     fetchData();

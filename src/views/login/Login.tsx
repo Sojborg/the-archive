@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import {Button, TextField, Typography} from "@material-ui/core";
-import { useHistory, Link } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { LOCAL_STORAGE_ACCESS_TOKEN_KEY } from "../../helpers/consts";
 import { Navigation } from "../../helpers/navigation";
 import "./Login.scss";
@@ -9,7 +9,7 @@ export const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [loginError, setLoginError] = useState(false);
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const login = async (e: React.MouseEvent | React.FormEvent) => {
     e.preventDefault();
@@ -27,7 +27,7 @@ export const Login = () => {
           data.accessToken
         );
         setLoginError(false);
-        history.push(Navigation.home);
+        navigate(Navigation.home);
       } else {
         setLoginError(true);
       }

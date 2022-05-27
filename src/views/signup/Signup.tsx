@@ -2,14 +2,14 @@
 import {Button, TextField, Typography} from "@material-ui/core";
 import {LOCAL_STORAGE_ACCESS_TOKEN_KEY} from "../../helpers/consts";
 import {Navigation} from "../../helpers/navigation";
-import {Link, useHistory} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import "./Signup.scss";
 
 export const Signup = () => {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [signupError, setSignupError] = useState(false);
-    const history = useHistory();
+    const navigate = useNavigate();
 
     const signup = async (e: React.MouseEvent | React.FormEvent) => {
         e.preventDefault();
@@ -27,7 +27,7 @@ export const Signup = () => {
                     data.accessToken
                 );
                 setSignupError(false);
-                history.push(Navigation.login);
+                navigate(Navigation.login);
             } else {
                 setSignupError(true);
             }
