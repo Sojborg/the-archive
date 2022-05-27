@@ -99,7 +99,7 @@ export const Books = () => {
           value={bookListState.sortBy}
         >
           {sortByOptions.map((x) => (
-            <MenuItem value={x.value}>{x.label}</MenuItem>
+            <MenuItem key={x.value} value={x.value}>{x.label}</MenuItem>
           ))}
         </Select>
         <Select
@@ -110,7 +110,7 @@ export const Books = () => {
           value={bookListState.sorting}
         >
           {sortingOptions.map((x) => (
-            <MenuItem value={x.value}>{x.label}</MenuItem>
+            <MenuItem key={x.value} value={x.value}>{x.label}</MenuItem>
           ))}
         </Select>
         <Button variant={'outlined'} className={"books__new-book-button"}>
