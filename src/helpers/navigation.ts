@@ -3,5 +3,6 @@ export enum Navigation {
     books = '/books',
     newbook = '/newbook',
     search = '/search',
-    login = '/login'
+    login = '/login',
+    signup = '/signup'
 }

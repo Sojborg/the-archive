@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { Button, TextField, Typography } from "@material-ui/core";
-import { useHistory } from "react-router-dom";
+import {Button, TextField, Typography} from "@material-ui/core";
+import { useNavigate, Link } from "react-router-dom";
 import { LOCAL_STORAGE_ACCESS_TOKEN_KEY } from "../../helpers/consts";
 import { Navigation } from "../../helpers/navigation";
 import "./Login.scss";
@@ -9,7 +9,7 @@ export const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [loginError, setLoginError] = useState(false);
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const login = async (e: React.MouseEvent | React.FormEvent) => {
     e.preventDefault();
@@ -27,7 +27,7 @@ export const Login = () => {
           data.accessToken
         );
         setLoginError(false);
-        history.push(Navigation.home);
+        navigate(Navigation.home);
       } else {
         setLoginError(true);
       }
@@ -41,6 +41,7 @@ export const Login = () => {
         <Typography variant={'h3'}>The Archive</Typography>
       </div>
       <div className={'login__container'}>
+      <Typography variant={'h4'}>Login</Typography>
       <div className={"login__form"}>
         <form onSubmit={login}>
           {loginError && (
@@ -51,6 +52,8 @@ export const Login = () => {
               id="username"
               label={"Username"}
               type={"text"}
+              fullWidth={true}
+              variant={'outlined'}
               value={username}
               onChange={(e) => setUsername(e.target.value)}
             />
@@ -60,20 +63,24 @@ export const Login = () => {
               id="password"
               label={"password"}
               type={"password"}
+              variant={'outlined'}
+              fullWidth={true}
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
           </div>
           <div className={"login__control login__control__button"}>
             <Button
-              variant={'outlined'}
+              variant={'contained'}
               type={'submit'}
               color="primary"
+              fullWidth={true}
               disabled={username === "" || password === ""}
               onClick={login}
             >
               Login
             </Button>
+            <Link to={Navigation.signup}>New user? Go sign up!</Link>
           </div>
         </form>
       </div>

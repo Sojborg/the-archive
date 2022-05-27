@@ -1,15 +1,15 @@
 import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Navigation } from "../helpers/navigation";
 import { TextField, Button } from "@material-ui/core";
 import "./SearchBar.scss";
 
 export const SearchBar = () => {
   const [inputValue, setInputValue] = useState("");
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const onSubmit = () => {
-    history.push(`${Navigation.search}/${inputValue}`);
+    navigate(`${Navigation.search}/${inputValue}`);
   };
 
   return (

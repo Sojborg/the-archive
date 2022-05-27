@@ -1,5 +1,5 @@
 import React, { createContext, useCallback, useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import {useLocation} from 'react-router-dom';
 
 interface UserState {
   loggedIn: boolean;
@@ -15,7 +15,7 @@ interface IAppContext {
 export const AppContext = createContext({} as IAppContext);
 
 export const AppProvider = (props: any) => {
-  const history = useHistory();
+  const location = useLocation();
   const [userState, setUserState] = useState({
       loggedIn: false
     } as UserState
@@ -37,7 +37,7 @@ export const AppProvider = (props: any) => {
       }
       return newUserState;
     });
-  }, [history.location]);
+  }, [location]);
 
   useEffect(() => {
     
