@@ -43,16 +43,12 @@ export const numberofbooks = async (req: any, res: any) => {
 
 export const addbooktolist = async (req: any, res: any) => {
   try {
-    console.log('Adding book', req.body);
-    console.log('request user', req.user);
     const user = await userRepository.getUserByUsername(req.user.name);
 
     if (!user) {
       res.sendStatus(404);
       return;
     }
-
-    console.log('db user', user);
 
     const book = new Book({
       ...req.body,
