@@ -13,7 +13,7 @@ export const Signup = () => {
 
     const signup = async (e: React.MouseEvent | React.FormEvent) => {
         e.preventDefault();
-        fetch("/Signup/signup", {
+        fetch("/login/signup", {
             method: "post",
             headers: {
                 "Content-Type": "application/json",

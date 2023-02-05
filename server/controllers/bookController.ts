@@ -18,7 +18,7 @@ export const books = async (req: any, res: any) => {
 
     const response = {
       books,
-      numberOfBooks
+      numberOfBooks: 10
     } as IBooksResponse;
 
     res.send(JSON.stringify(response));

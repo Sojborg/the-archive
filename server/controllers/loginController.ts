@@ -3,6 +3,7 @@ import jwt, { VerifyErrors } from "jsonwebtoken";
 import * as argon2 from 'argon2';
 import { repository } from "../repository/repository";
 import { userRepository } from "../repository/UserRepository";
+import { User } from "../models/User";
 
 export interface IUser {
   username: string;
@@ -17,10 +18,10 @@ export const signUp = async (request: any, response: any) => {
 
   const passwordHashed = await argon2.hash(password);
 
-  const user: IUser = {
+  const user = new User({
     username,
     password: passwordHashed
-  }
+  });
 
   await userRepository.createDocument(user);
 
@@ -41,7 +42,7 @@ export const login = async (request: any, response: any) => {
 
   if (correctPassword) {
     const accessToken = generateAccessToken(user);
-    const refreshToken = jwt.sign(user, process.env.REFRESH_TOKEN_SECRET!);
+    const refreshToken = jwt.sign({name: user.username}, process.env.REFRESH_TOKEN_SECRET!);
     refreshTokens.push(refreshToken);
     response.json({accessToken, refreshToken});
   } else {
@@ -50,5 +51,5 @@ export const login = async (request: any, response: any) => {
 }
 
 const generateAccessToken = (user: any) => {
-  return jwt.sign(user, process.env.ACCESS_TOKEN_SECRET!, { expiresIn: '10m' })
+  return jwt.sign({name: user.username}, process.env.ACCESS_TOKEN_SECRET!, { expiresIn: '10m' })
 }
