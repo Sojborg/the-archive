@@ -3,6 +3,8 @@ import { googleBooksService } from "../services/google-books-service";
 import { IBooksResponse } from '../../src/common/models/IBooksResponse';
 import { IBooksRequest } from "../../src/common/models/IBooksRequest";
 import { bookRepository } from "../repository/BookRepository";
+import { Book } from "../models/Book";
+import { userRepository } from "../repository/UserRepository";
 
 export const books = async (req: any, res: any) => {
   try {
@@ -13,7 +15,8 @@ export const books = async (req: any, res: any) => {
       pageSize: req.body.pageSize < 1 ? 1 : req.body.pageSize
     } as IBooksRequest;
 
-    const books = await bookRepository.queryCollection(request, req.user.id);
+    const user = await userRepository.getUserByUsername(req.user.name);
+    const books = await bookRepository.queryCollection(request, user!.id);
     const numberOfBooks = await bookRepository.countCollection();
 
     const response = {
@@ -40,11 +43,22 @@ export const numberofbooks = async (req: any, res: any) => {
 
 export const addbooktolist = async (req: any, res: any) => {
   try {
-    console.log(req.body);
-    const book = {
-      ...req.body,
-      userId: req.user.id
+    console.log('Adding book', req.body);
+    console.log('request user', req.user);
+    const user = await userRepository.getUserByUsername(req.user.name);
+
+    if (!user) {
+      res.sendStatus(404);
+      return;
     }
+
+    console.log('db user', user);
+
+    const book = new Book({
+      ...req.body,
+      userId: user.id
+    });
+
     await bookRepository.createDocument(book);
     const numberOfBooksCount = await bookRepository.countCollection();
     const payload = {numberOfBooks: numberOfBooksCount};

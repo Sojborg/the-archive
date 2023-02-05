@@ -6,6 +6,7 @@ import { userRepository } from "../repository/UserRepository";
 import { User } from "../models/User";
 
 export interface IUser {
+  id: string;
   username: string;
   password: string;
 }
