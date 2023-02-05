@@ -5,23 +5,21 @@ import "./Search.scss";
 import { addBookList, getNumberOfBooks } from "../../helpers/bookservice";
 import { motion } from "framer-motion"
 import { IBook } from "../../common/models/IBooksResponse";
-
-interface ISearchBarProps {
-  query?: string;
-}
+import { useParams } from "react-router";
 
 export enum SearchViewMode {
   small,
   large,
 }
 
-export const Search = (props: ISearchBarProps) => {
+export const Search = () => {
   const [viewMode, setViewMode] = useState(SearchViewMode.small);
   const [addingItem, setAddingItem] = useState<string | undefined>(undefined);
   const [numberOfBooks, setNumberOfBooks] = useState<number | undefined>(
     undefined
   );
-  const response = useFetch<any>(`/books/searchbook?q=${props.query}`);
+  const params = useParams();
+  const response = useFetch<any>(`/books/searchbook?q=${params.query}`);
 
   useEffect(() => {
     const fetchData = async () => {

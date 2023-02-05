@@ -35,12 +35,7 @@ function App() {
                     <Route path={Navigation.newbook} element={<CreateBook/>}/>
                     <Route
                       path={`${Navigation.search}/:query`}
-                      loader={() => {
-                        
-                      }}
-                      element={(props: any) => {
-                        return <Search query={props.match.params.query}/>;
-                      }}
+                      element={<Search />}
                     />
                     <Route path={Navigation.home} element={<Dashboard/>}/>
                     </Routes>
