@@ -1,20 +1,37 @@
-import {Schema, model} from 'mongoose';
+import { Schema, model } from 'mongoose';
 
-const BookSchema = new Schema(
+export interface IBaseModel {
+  id: string;
+}
+
+export interface IBook extends IBaseModel {
+  userId: string;
+  title: string;
+  author: string;
+  coverImageUrl: string;
+  productId: string;
+  publisher: string;
+  synopsis: string;
+  notes: string;
+  status: number;
+  pageCount: number;
+}
+
+export const BookSchema = new Schema<IBook>(
   {
-    id: {type: String, required: true, unique: true},
-    userId: {type: String, required: true},
-    title: {type: String},
-    author: {type: String},
-    coverImageUrl: {type: String},
-    productId: {type: String},
-    publisher: {type: String},
-    synopsis: {type: String},
-    notes: {type: String},
-    status: {type: Number},
-    pageCount: {type: Number}
+    id: { type: String, required: true, unique: true },
+    userId: { type: String, required: true },
+    title: { type: String },
+    author: { type: String },
+    coverImageUrl: { type: String },
+    productId: { type: String },
+    publisher: { type: String },
+    synopsis: { type: String },
+    notes: { type: String },
+    status: { type: Number },
+    pageCount: { type: Number }
   },
-  {timestamps: true}
+  { timestamps: true }
 );
 
 export const Book = model("Book", BookSchema);

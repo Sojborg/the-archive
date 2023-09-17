@@ -3,13 +3,7 @@ import jwt, { VerifyErrors } from "jsonwebtoken";
 import * as argon2 from 'argon2';
 import { repository } from "../repository/repository";
 import { userRepository } from "../repository/UserRepository";
-import { User } from "../models/User";
-
-export interface IUser {
-  id: string;
-  username: string;
-  password: string;
-}
+import { IUser, User } from "../models/User";
 
 let refreshTokens: string[] = [];
 
@@ -19,12 +13,12 @@ export const signUp = async (request: any, response: any) => {
 
   const passwordHashed = await argon2.hash(password);
 
-  const user = new User({
+  const user: IUser = {
     username,
     password: passwordHashed
-  });
+  };
 
-  await userRepository.createDocument(user);
+  await userRepository.createUser(user);
 
   response.json({username})
 }

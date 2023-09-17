@@ -1,30 +1,19 @@
-import { repository } from "../repository/repository";
 import { googleBooksService } from "../services/google-books-service";
-import { IBooksResponse } from '../../src/common/models/IBooksResponse';
 import { IBooksRequest } from "../../src/common/models/IBooksRequest";
-import { bookRepository } from "../repository/BookRepository";
 import { Book } from "../models/Book";
 import { userRepository } from "../repository/UserRepository";
+import { bookService } from "../services/book-service";
 
 export const books = async (req: any, res: any) => {
   try {
-    res.setHeader("Content-Type", "application/json");
-
     const request = {
       ...req.body,
       pageSize: req.body.pageSize < 1 ? 1 : req.body.pageSize
     } as IBooksRequest;
 
-    const user = await userRepository.getUserByUsername(req.user.name);
-    const books = await bookRepository.queryCollection(request, user!.id);
-    const numberOfBooks = await bookRepository.countCollection();
+    const response = await bookService.queryUserBooks(req.user.name, request);
 
-    const response = {
-      books,
-      numberOfBooks: 10
-    } as IBooksResponse;
-
-    res.send(JSON.stringify(response));
+    res.json(response);
   } catch (e) {
     console.error(e);
   }
@@ -32,10 +21,9 @@ export const books = async (req: any, res: any) => {
 
 export const numberofbooks = async (req: any, res: any) => {
   try {
-    res.setHeader("Content-Type", "application/json");
-    const count = await bookRepository.countCollection();
+    const count = await bookService.getUserNumberOfBooks(req.user.name);
     const payload = {numberOfBooks: count};
-    res.send(JSON.stringify(payload));
+    res.json(payload);
   } catch (e) {
     console.error(e);
   }
@@ -50,15 +38,7 @@ export const addbooktolist = async (req: any, res: any) => {
       return;
     }
 
-    const book = new Book({
-      ...req.body,
-      userId: user.id
-    });
-
-    await bookRepository.createDocument(book);
-    const numberOfBooksCount = await bookRepository.countCollection();
-    const payload = {numberOfBooks: numberOfBooksCount};
-    res.send(JSON.stringify(payload));
+    bookService.addbooktolist(req.user.name, req.body);
   } catch (e) {
     console.error(e);
   }
@@ -71,7 +51,7 @@ export const savebook = async (req: any, res: any) => {
       ...req.body,
       userId: req.user.id
     }
-    bookRepository.replaceDocument(book);
+    // bookRepository.replaceDocument(book);
     res.sendStatus(200);
   } catch (e) {
     console.error(e);
@@ -83,7 +63,7 @@ export const removebook = async (req: any, res: any) => {
     console.log('BODY', req.body);
     const data = req.body
     console.log(data);
-    bookRepository.deleteDocument(data.id);
+    // bookRepository.deleteDocument(data.id);
     res.sendStatus(200);
   } catch (e) {
     console.error(e);

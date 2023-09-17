@@ -1,51 +1,21 @@
 import { DocumentClient } from "documentdb";
-import {Document as MongooesDocument} from 'mongoose';
+import {Model, Document as MongooesDocument} from 'mongoose';
 import mongoose from 'mongoose';
+import { IBaseModel, IBook } from "../models/Book";
 
-export abstract class BaseRepository<T extends MongooesDocument> {
+export abstract class BaseRepository<T extends IBaseModel> {
 
   constructor(protected collection: string) {
-
-    mongoose.connect('mongodb+srv://sojborg:minHemmeligekodeerbedst00@cluster0.ymytk.mongodb.net/thearchive', {
-    });
+    console.log('BaseRepository constructor')
   }
 
-  // client = new DocumentClient(config.endpoint, {
-  //   masterKey: config.primaryKey,
-  // });
-
-  // HttpStatusCodes = { NOTFOUND: 404 };
-  // databaseUrl = `dbs/${config.database.id}`;
-  // collectionUrl = `${this.databaseUrl}/colls/${this.collection}`;
-
-  getDocument(document: T) {
-    // let documentUrl = `${this.collectionUrl}/docs/${document.id}`;
-    // console.log(`Getting document:\n${document.id}\n`);
-
-    // return new Promise((resolve, reject) => {
-    //   this.client.readDocument(documentUrl, (err, result) => {
-    //     if (err) {
-    //       if (err.code == this.HttpStatusCodes.NOTFOUND) {
-
-    //       } else {
-    //         reject(err);
-    //       }
-    //     } else {
-    //       resolve(result);
-    //     }
-    //   });
-    // });
+  getById(modelId: string) {
+  
   }
 
-  async createDocument(document: T) {
+  async createDocument(document: Model<T>) {    
     console.log("Creating document: ", document);
-    await document.save((err) => {
-      if (err) {
-        console.error('Could not create document', err);
-      }
-
-      console.log('Document saved!');
-    });
+    // await document.save();
   }
 
   countCollection() {
