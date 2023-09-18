@@ -1,6 +1,5 @@
 import { googleBooksService } from "../services/google-books-service";
 import { IBooksRequest } from "../../src/common/models/IBooksRequest";
-import { Book } from "../models/Book";
 import { userRepository } from "../repository/UserRepository";
 import { bookService } from "../services/book-service";
 

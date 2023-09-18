@@ -1,5 +1,4 @@
-import { IUser } from "../controllers/loginController";
-import { User } from "../models/User";
+import { IUser, User } from "../models/User";
 import { BaseRepository } from "./BaseRepositoty";
 
 class UserRepository extends BaseRepository<any> {

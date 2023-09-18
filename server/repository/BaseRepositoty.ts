@@ -1,7 +1,5 @@
-import { DocumentClient } from "documentdb";
-import {Model, Document as MongooesDocument} from 'mongoose';
-import mongoose from 'mongoose';
-import { IBaseModel, IBook } from "../models/Book";
+import {Model} from 'mongoose';
+import { IBaseModel } from "../models/Book";
 
 export abstract class BaseRepository<T extends IBaseModel> {
 

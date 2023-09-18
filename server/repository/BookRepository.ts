@@ -1,7 +1,5 @@
-import { Model } from "mongoose";
 import { IBooksRequest } from "../../src/common/models/IBooksRequest";
 import { Book, IBook } from "../models/Book";
-import { BaseRepository } from "./BaseRepositoty";
 
 class BookRepository {
 
