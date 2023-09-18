@@ -1,6 +1,7 @@
 import { IBooksRequest } from '../../src/common/models/IBooksRequest';
 import { IBooksResponse } from '../../src/common/models/IBooksResponse';
 import {Book, IBook} from '../models/Book';
+import { IUser } from '../models/User';
 import { bookRepository } from '../repository/BookRepository';
 import { userRepository } from '../repository/UserRepository';
 
@@ -24,12 +25,7 @@ class BookService {
         return numberOfBooks;
     }
 
-    async addbooktolist (username: string, book: IBook): Promise<number | null> {
-        const user = await userRepository.getUserByUsername(username);
-
-        if (!user) {
-        return null;
-        }
+    async addbooktolist (user: IUser, book: IBook): Promise<number | null> {
 
         const bookModel = new Book({
             ...book,
@@ -37,9 +33,19 @@ class BookService {
         });
     
         await bookRepository.createBook(bookModel);
-        const numberOfBooks = await this.getUserNumberOfBooks(username);
+        const numberOfBooks = await this.getUserNumberOfBooks(user.username);
 
         return numberOfBooks;
+    };
+
+    async savebook (book: IBook): Promise<IBook | null> {
+        const bookModel = new Book(book);
+        const savedBook = await bookRepository.updateBook(bookModel);
+        return savedBook;
+    };
+
+    async removebook (bookId: string): Promise<void> {
+        await bookRepository.deleteBook(bookId);
     };
 }
 

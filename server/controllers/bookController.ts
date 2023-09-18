@@ -38,7 +38,7 @@ export const addbooktolist = async (req: any, res: any) => {
       return;
     }
 
-    bookService.addbooktolist(req.user.name, req.body);
+    bookService.addbooktolist(user, req.body);
   } catch (e) {
     console.error(e);
   }
@@ -51,19 +51,32 @@ export const savebook = async (req: any, res: any) => {
       ...req.body,
       userId: req.user.id
     }
-    // bookRepository.replaceDocument(book);
-    res.sendStatus(200);
+
+    // Check if user has access to book
+    const user = await userRepository.getUserByUsername(req.user.id);
+    if (!user || !user.bookIds.includes(book.id)) {
+      res.sendStatus(403);
+      return;
+    }
+    
+    const savedBook = await bookService.savebook(book);
+    res.json({savedBook});
   } catch (e) {
     console.error(e);
   }
 };
 
 export const removebook = async (req: any, res: any) => {
-  try {
-    console.log('BODY', req.body);
-    const data = req.body
-    console.log(data);
-    // bookRepository.deleteDocument(data.id);
+  try {    
+    // Check if user has access to book
+    const user = await userRepository.getUserByUsername(req.user.id);
+    if (!user || !user.bookIds.includes(req.data.id)) {
+      res.sendStatus(403);
+      return;
+    }
+
+    await bookService.removebook(req.data.id);
+
     res.sendStatus(200);
   } catch (e) {
     console.error(e);
