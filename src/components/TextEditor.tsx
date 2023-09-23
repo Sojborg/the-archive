@@ -22,7 +22,7 @@ export const TextEditor = (props: ITextEditorProps) => {
       config={config}
       onBlur={(e: any) => {
         console.log('TextEditor', e)
-        onChange(e.target.innerHTML);
+        onChange(e);
       }}
       onChange={(newContent) => {}}
     />
