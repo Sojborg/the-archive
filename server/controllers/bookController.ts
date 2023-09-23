@@ -46,16 +46,10 @@ export const addbooktolist = async (req: any, res: any) => {
 export const savebook = async (req: any, res: any) => {
   try {
     console.log(req.body);
+    const user = await userRepository.getUserByUsername(req.user.id);
     const book = {
       ...req.body,
-      userId: req.user.id
-    }
-
-    // Check if user has access to book
-    const user = await userRepository.getUserByUsername(req.user.id);
-    if (!user || !user.bookIds.includes(book.id)) {
-      res.sendStatus(403);
-      return;
+      userId: user?.id
     }
     
     const savedBook = await bookService.savebook(book);
@@ -69,7 +63,8 @@ export const removebook = async (req: any, res: any) => {
   try {    
     // Check if user has access to book
     const user = await userRepository.getUserByUsername(req.user.id);
-    if (!user || !user.bookIds.includes(req.data.id)) {
+    const book = await bookService.getBookById(req.data.id);
+    if (!user || book?.userId !== user.id) {
       res.sendStatus(403);
       return;
     }

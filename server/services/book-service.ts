@@ -8,8 +8,8 @@ import { userRepository } from '../repository/UserRepository';
 class BookService {
     async queryUserBooks(username: string, queryOptions: IBooksRequest) {
         const user = await userRepository.getUserByUsername(username);
-        const books = await bookRepository.queryCollection(queryOptions, user!.id);
-        const numberOfBooks = await bookRepository.getCountUserBooks(user!.id);
+        const books = await bookRepository.queryCollection(queryOptions, user?.id ?? '');
+        const numberOfBooks = await bookRepository.getCountUserBooks(user?.id ?? '');
 
         const response = {
             books,
@@ -21,8 +21,13 @@ class BookService {
 
     async getUserNumberOfBooks(username: string) {
         const user = await userRepository.getUserByUsername(username);        
-        const numberOfBooks = await bookRepository.getCountUserBooks(user!.id);
+        const numberOfBooks = await bookRepository.getCountUserBooks(user?.id ?? '');
         return numberOfBooks;
+    }
+
+    async getBookById(bookId: string) {
+        const book = await bookRepository.getBookById(bookId);
+        return book;
     }
 
     async addbooktolist (user: IUser, book: IBook): Promise<number | null> {
@@ -40,6 +45,7 @@ class BookService {
 
     async savebook (book: IBook): Promise<IBook | null> {
         const bookModel = new Book(book);
+        console.log({bookModel})
         const savedBook = await bookRepository.updateBook(bookModel);
         return savedBook;
     };

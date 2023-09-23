@@ -1,6 +1,5 @@
 // import { config } from '../config';
 import { bookRepository } from '../repository/BookRepository';
-import {repository} from '../repository/repository';
 
 // const createBooksTable = () => {
 //     repository.getDatabase()
