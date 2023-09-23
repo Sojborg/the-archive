@@ -1,7 +1,7 @@
 import { Schema, model } from 'mongoose';
 
 export interface IBaseModel {
-  id: string;
+  _id: string;
 }
 
 export interface IBook extends IBaseModel {
@@ -19,7 +19,6 @@ export interface IBook extends IBaseModel {
 
 export const BookSchema = new Schema<IBook>(
   {
-    id: { type: String, required: true, unique: true },
     userId: { type: String, required: true },
     title: { type: String },
     author: { type: String },

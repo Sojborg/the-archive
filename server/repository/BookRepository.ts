@@ -51,7 +51,7 @@ class BookRepository {
 
     public async updateBook(bookData: IBook): Promise<IBook | null> {
         try {
-            const book = await Book.findByIdAndUpdate(bookData.id, bookData, { new: true });
+            const book = await Book.findByIdAndUpdate(bookData._id, bookData, { new: true });
             return book;
         } catch (error) {
             throw new Error(`Could not update book: ${error}`);
