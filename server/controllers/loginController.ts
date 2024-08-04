@@ -1,13 +1,8 @@
 require("dotenv").config();
-import jwt, { VerifyErrors } from "jsonwebtoken";
+import jwt from "jsonwebtoken";
 import * as argon2 from 'argon2';
-import { repository } from "../repository/repository";
 import { userRepository } from "../repository/UserRepository";
-
-export interface IUser {
-  username: string;
-  password: string;
-}
+import { IUser } from "../models/User";
 
 let refreshTokens: string[] = [];
 
@@ -20,9 +15,9 @@ export const signUp = async (request: any, response: any) => {
   const user: IUser = {
     username,
     password: passwordHashed
-  }
+  };
 
-  await userRepository.createDocument(user);
+  await userRepository.createUser(user);
 
   response.json({username})
 }
@@ -41,7 +36,7 @@ export const login = async (request: any, response: any) => {
 
   if (correctPassword) {
     const accessToken = generateAccessToken(user);
-    const refreshToken = jwt.sign(user, process.env.REFRESH_TOKEN_SECRET!);
+    const refreshToken = jwt.sign({name: user.username}, process.env.REFRESH_TOKEN_SECRET!);
     refreshTokens.push(refreshToken);
     response.json({accessToken, refreshToken});
   } else {
@@ -50,5 +45,5 @@ export const login = async (request: any, response: any) => {
 }
 
 const generateAccessToken = (user: any) => {
-  return jwt.sign(user, process.env.ACCESS_TOKEN_SECRET!, { expiresIn: '10m' })
+  return jwt.sign({name: user.username}, process.env.ACCESS_TOKEN_SECRET!, { expiresIn: '10m' })
 }

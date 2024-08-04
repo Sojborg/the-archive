@@ -5,6 +5,10 @@ import bodyParser from "body-parser";
 import bookRouter from './routes/bookRoutes';
 import loginRouter from './routes/loginRoutes';
 import jwt, { VerifyErrors } from 'jsonwebtoken';
+import mongoose from "mongoose";
+
+mongoose.connect(`mongodb+srv://sojborg:${process.env.MONGOOES_KEY}@cluster0.ymytk.mongodb.net/thearchive`, {
+}).finally(() => { console.log('MONGO CONNECTED')});
 
 // Create a new express app instance
 const app: express.Application = express();
