@@ -1,7 +1,6 @@
 import { IUser, User } from "../models/User";
-import { BaseRepository } from "./BaseRepositoty";
 
-class UserRepository extends BaseRepository<any> {
+class UserRepository {
     
   async createUser(user: IUser) {
     try {
@@ -23,4 +22,4 @@ class UserRepository extends BaseRepository<any> {
   }
 }
 
-export const userRepository = new UserRepository('Users');
+export const userRepository = new UserRepository();
