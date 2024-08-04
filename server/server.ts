@@ -7,7 +7,7 @@ import loginRouter from './routes/loginRoutes';
 import jwt, { VerifyErrors } from 'jsonwebtoken';
 import mongoose from "mongoose";
 
-mongoose.connect('mongodb+srv://sojborg:minHemmeligekodeerbedst00@cluster0.ymytk.mongodb.net/thearchive', {
+mongoose.connect(`mongodb+srv://sojborg:${process.env.MONGOOES_KEY}@cluster0.ymytk.mongodb.net/thearchive`, {
 }).finally(() => { console.log('MONGO CONNECTED')});
 
 // Create a new express app instance
