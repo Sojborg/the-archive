@@ -45,14 +45,14 @@ export const addbooktolist = async (req: any, res: any) => {
 
 export const savebook = async (req: any, res: any) => {
   try {
-    console.log(req.body);
-    const user = await userRepository.getUserByUsername(req.user.id);
-    const book = {
-      ...req.body,
-      userId: user?.id
+    const user = await userRepository.getUserByUsername(req.user.name);
+
+    if (!user) {
+      res.sendStatus(404);
+      return;
     }
     
-    const savedBook = await bookService.savebook(book);
+    const savedBook = await bookService.savebook(user, req.body);
     res.json({savedBook});
   } catch (e) {
     console.error(e);

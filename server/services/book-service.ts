@@ -31,7 +31,6 @@ class BookService {
     }
 
     async addbooktolist (user: IUser, book: IBook): Promise<number | null> {
-
         const bookModel = new Book({
             ...book,
             userId: user.id
@@ -43,8 +42,11 @@ class BookService {
         return numberOfBooks;
     };
 
-    async savebook (book: IBook): Promise<IBook | null> {
-        const bookModel = new Book(book);
+    async savebook (user: IUser, book: IBook): Promise<IBook | null> {
+        const bookModel = new Book({
+            ...book,
+            userId: user.id
+        });
         console.log({bookModel})
         const savedBook = await bookRepository.updateBook(bookModel);
         return savedBook;
