@@ -1,8 +1,8 @@
-require("dotenv").config();
 import jwt from "jsonwebtoken";
 import * as argon2 from 'argon2';
 import { userRepository } from "../repository/UserRepository";
 import { IUser } from "../models/User";
+require("dotenv").config();
 
 let refreshTokens: string[] = [];
 
