@@ -1,6 +1,6 @@
 import React, {useRef} from "react";
 import "./SearchBook.scss";
-import {Button} from "@material-ui/core";
+import {Button} from "@mui/material";
 import {SearchViewMode} from "./Search";
 import {IBook} from "../../common/models/IBooksResponse";
 

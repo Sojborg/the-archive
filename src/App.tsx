@@ -9,7 +9,7 @@ import {Search} from "./views/search/Search";
 import {Login} from "./views/login/Login";
 import {AppProvider} from "./AppProvider";
 import {AppHeader} from "./components/AppHeader";
-import {QueryClient, QueryClientProvider} from "react-query";
+import {QueryClient, QueryClientProvider} from "@tanstack/react-query";
 import {Signup} from "./views/signup/Signup";
 
 function App() {

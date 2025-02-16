@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Navigation } from "../helpers/navigation";
-import { TextField, Button } from "@material-ui/core";
+import { TextField, Button } from "@mui/material";
 import "./SearchBar.scss";
 
 export const SearchBar = () => {

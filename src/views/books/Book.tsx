@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./Book.scss";
 import { TextEditor } from "../../components/TextEditor";
-import { Button, MenuItem, Select } from "@material-ui/core";
+import { Button, MenuItem, Select } from "@mui/material";
 import { IBook, BookStatus } from "../../common/models/IBooksResponse";
 
 interface IBookProps {

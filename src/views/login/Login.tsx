@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import {Button, TextField, Typography} from "@material-ui/core";
+import {Button, TextField, Typography} from "@mui/material";
 import { useNavigate, Link } from "react-router-dom";
 import { LOCAL_STORAGE_ACCESS_TOKEN_KEY } from "../../helpers/consts";
 import { Navigation } from "../../helpers/navigation";

@@ -3,7 +3,7 @@ import {Link} from "react-router-dom";
 import {Book} from "./Book";
 import {Navigation} from "../../helpers/navigation";
 import "./Books.scss";
-import {Button, MenuItem, Select} from "@material-ui/core";
+import {Button, MenuItem, Select} from "@mui/material";
 import {removeBook, saveBook} from "../../helpers/bookservice";
 import {IBook} from "../../common/models/IBooksResponse";
 import {AppContext} from "../../AppProvider";

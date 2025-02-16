@@ -1,12 +1,12 @@
 import React, { useContext } from "react";
-import { Button, LinearProgress } from "@material-ui/core";
+import { Button, LinearProgress } from "@mui/material";
 import { Link } from "react-router-dom";
 import { AppContext } from "../AppProvider";
 import { LOCAL_STORAGE_ACCESS_TOKEN_KEY } from "../helpers/consts";
 import { Navigation } from "../helpers/navigation";
 import { SearchBar } from "./SearchBar";
-import MenuIcon from '@material-ui/icons/Menu';
-import { useIsFetching } from "react-query";
+import MenuIcon from '@mui/icons-material/Menu';
+import { useIsFetching } from "@tanstack/react-query";
 
 export const AppHeader = () => {
   const appContext = useContext(AppContext);
